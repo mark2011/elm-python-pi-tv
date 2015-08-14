@@ -20,6 +20,7 @@ class PhotosResource:
 subprocess.call (["xset", "s", "noblank"])
 subprocess.call (["xset", "s", "off"])
 subprocess.call (["xset", "-dpms"])
+subprocess.Popen (["./process-remote-control-buttons.py"])
 subprocess.Popen (["chromium", "elm-python-pi-tv.html"])
 time.sleep (10)
 subprocess.call (["xdotool", "search", "--class", "chromium", "key", "F11"])

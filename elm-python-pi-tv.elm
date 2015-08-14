@@ -35,6 +35,11 @@ type Action
   | Errored Http.Error
 
 
+maybeFirst list = case list of
+  [] -> Nothing
+  first :: _ -> Just first
+
+
 following : a -> List a -> List a
 following a list = case list of
   head :: tail -> if head == a then tail else following a tail
@@ -49,7 +54,6 @@ maybeNextEntry maybeEntry entries = case entries of
     Just entry -> case following entry entries of
       [] -> Just first
       head :: _ -> Just head
-
 
 main = start
   { model =
@@ -173,6 +177,12 @@ update action model = case action of
       { model | date <- date }
   KeyPressed 'd' ->
     { model | debug <- not model.debug }
+  KeyPressed '0' ->
+    { model | photoName <- maybeFirst model.photos }
+  KeyPressed 'h' ->
+    { model | photoName <- maybeNextEntry model.photoName (List.reverse model.photos) }
+  KeyPressed 'l' ->
+    { model | photoName <- maybeNextEntry model.photoName model.photos }
   KeyPressed _ ->
     model
   SetWindowSize windowSize ->

@@ -4013,7 +4013,7 @@ Elm.Main.make = function (_elm) {
                   case "Oct": return "October";
                   case "Sep": return "September";}
                _U.badCase($moduleName,
-               "between lines 107 and 120");
+               "between lines 111 and 124");
             }();
             var dayName = function () {
                var _v3 = $Date.dayOfWeek(model.date);
@@ -4026,7 +4026,7 @@ Elm.Main.make = function (_elm) {
                   case "Tue": return "Tuesday";
                   case "Wed": return "Wednesday";}
                _U.badCase($moduleName,
-               "between lines 99 and 107");
+               "between lines 103 and 111");
             }();
             var dayNumber = $Date.day(model.date);
             var daySuffix = _U.eq(dayNumber,
@@ -4065,7 +4065,7 @@ Elm.Main.make = function (_elm) {
                              list._1);
                            case "[]": return n;}
                         _U.badCase($moduleName,
-                        "between lines 87 and 90");
+                        "between lines 91 and 94");
                      }();
                   });
                   return A2(listWidth$,1,list);
@@ -4136,7 +4136,7 @@ Elm.Main.make = function (_elm) {
                                                ,""
                                                ,""]));}
                _U.badCase($moduleName,
-               "between lines 149 and 160");
+               "between lines 153 and 164");
             }();
             return $Html.fromElement($Graphics$Element.color($Color.black)(screen));
          }();
@@ -4154,7 +4154,7 @@ Elm.Main.make = function (_elm) {
             case "[]":
             return _L.fromArray([]);}
          _U.badCase($moduleName,
-         "between lines 39 and 41");
+         "between lines 44 and 46");
       }();
    });
    var maybeNextEntry = F2(function (maybeEntry,
@@ -4174,19 +4174,30 @@ Elm.Main.make = function (_elm) {
                             case "[]":
                             return $Maybe.Just(entries._0);}
                          _U.badCase($moduleName,
-                         "between lines 49 and 51");
+                         "between lines 54 and 56");
                       }();
                     case "Nothing":
                     return $Maybe.Just(entries._0);}
                  _U.badCase($moduleName,
-                 "between lines 47 and 51");
+                 "between lines 52 and 56");
               }();
             case "[]":
             return $Maybe.Nothing;}
          _U.badCase($moduleName,
-         "between lines 45 and 51");
+         "between lines 50 and 56");
       }();
    });
+   var maybeFirst = function (list) {
+      return function () {
+         switch (list.ctor)
+         {case "::":
+            return $Maybe.Just(list._0);
+            case "[]":
+            return $Maybe.Nothing;}
+         _U.badCase($moduleName,
+         "between lines 38 and 40");
+      }();
+   };
    var update = F2(function (action,
    model) {
       return function () {
@@ -4209,9 +4220,25 @@ Elm.Main.make = function (_elm) {
               model);
             case "KeyPressed":
             switch (action._0 + "")
-              {case "d":
+              {case "0":
+                 return _U.replace([["photoName"
+                                    ,maybeFirst(model.photos)]],
+                   model);
+                 case "d":
                  return _U.replace([["debug"
                                     ,$Basics.not(model.debug)]],
+                   model);
+                 case "h":
+                 return _U.replace([["photoName"
+                                    ,A2(maybeNextEntry,
+                                    model.photoName,
+                                    $List.reverse(model.photos))]],
+                   model);
+                 case "l":
+                 return _U.replace([["photoName"
+                                    ,A2(maybeNextEntry,
+                                    model.photoName,
+                                    model.photos)]],
                    model);}
               return model;
             case "SetPhotosList":
@@ -4225,7 +4252,7 @@ Elm.Main.make = function (_elm) {
                                ,$Basics.snd(action._0)]],
               model);}
          _U.badCase($moduleName,
-         "between lines 164 and 179");
+         "between lines 168 and 189");
       }();
    });
    var Errored = function (a) {
@@ -4239,7 +4266,7 @@ Elm.Main.make = function (_elm) {
    };
    var sendPhotos = sendPolling(SetPhotosList);
    var pollingRequests = Elm.Native.Task.make(_elm).performSignal("pollingRequests",
-   $Signal.map(function (_v26) {
+   $Signal.map(function (_v29) {
       return function () {
          return A2($Task.onError,
          A2($Task.andThen,
@@ -4276,15 +4303,15 @@ Elm.Main.make = function (_elm) {
             return KeyPressed($Char.fromCode($));
          })($Keyboard.presses);
          var model = A3($Signal.foldp,
-         F2(function (_v28,model) {
+         F2(function (_v31,model) {
             return function () {
-               switch (_v28.ctor)
+               switch (_v31.ctor)
                {case "Just":
                   return A2(app.update,
-                    _v28._0,
+                    _v31._0,
                     model);}
                _U.badCase($moduleName,
-               "on line 231, column 34 to 57");
+               "on line 241, column 34 to 57");
             }();
          }),
          app.model,
@@ -4332,6 +4359,7 @@ Elm.Main.make = function (_elm) {
                       ,SetWindowSize: SetWindowSize
                       ,SetPhotosList: SetPhotosList
                       ,Errored: Errored
+                      ,maybeFirst: maybeFirst
                       ,following: following
                       ,maybeNextEntry: maybeNextEntry
                       ,main: main
