@@ -3972,6 +3972,10 @@ Elm.Main.make = function (_elm) {
              ,update: c
              ,view: b};
    });
+   var isShortTime = function (date) {
+      return _U.cmp($Date.second(date),
+      10) < 0;
+   };
    var isPhotoTime = function (date) {
       return _U.eq(A2($Basics.rem,
       $Date.second(date),
@@ -3988,15 +3992,29 @@ Elm.Main.make = function (_elm) {
    model) {
       return function () {
          return function () {
-            var minute00 = _U.cmp($Date.minute(model.date),
-            10) < 0 ? A2($Basics._op["++"],
-            "0",
-            $Basics.toString($Date.minute(model.date))) : $Basics.toString($Date.minute(model.date));
+            var minute00 = function () {
+               var m = $Date.minute(model.date);
+               return A2($Basics._op["++"],
+               _U.cmp(m,10) < 0 ? "0" : "",
+               $Basics.toString(m));
+            }();
             var amPm = _U.cmp($Date.hour(model.date),
             11) < 1 ? "AM" : "PM";
-            var hour12 = _U.eq($Date.hour(model.date),
-            0) ? 12 : _U.cmp($Date.hour(model.date),
-            12) < 1 ? $Date.hour(model.date) : $Date.hour(model.date) - 12;
+            var hour12 = function () {
+               var h = $Date.hour(model.date);
+               return _U.eq(h,
+               0) ? 12 : _U.cmp(h,
+               12) < 1 ? h : h - 12;
+            }();
+            var shortTime = A2($Basics._op["++"],
+            $Basics.toString(hour12),
+            A2($Basics._op["++"],
+            ":",
+            A2($Basics._op["++"],
+            minute00,
+            A2($Basics._op["++"],
+            " ",
+            amPm))));
             var monthName = function () {
                var _v2 = $Date.month(model.date);
                switch (_v2.ctor)
@@ -4013,7 +4031,7 @@ Elm.Main.make = function (_elm) {
                   case "Oct": return "October";
                   case "Sep": return "September";}
                _U.badCase($moduleName,
-               "between lines 111 and 124");
+               "between lines 121 and 134");
             }();
             var dayName = function () {
                var _v3 = $Date.dayOfWeek(model.date);
@@ -4026,7 +4044,7 @@ Elm.Main.make = function (_elm) {
                   case "Tue": return "Tuesday";
                   case "Wed": return "Wednesday";}
                _U.badCase($moduleName,
-               "between lines 103 and 111");
+               "between lines 113 and 121");
             }();
             var dayNumber = $Date.day(model.date);
             var daySuffix = _U.eq(dayNumber,
@@ -4065,7 +4083,7 @@ Elm.Main.make = function (_elm) {
                              list._1);
                            case "[]": return n;}
                         _U.badCase($moduleName,
-                        "between lines 91 and 94");
+                        "between lines 98 and 101");
                      }();
                   });
                   return A2(listWidth$,1,list);
@@ -4084,14 +4102,17 @@ Elm.Main.make = function (_elm) {
             var c1 = A2($Graphics$Element.container,
             model.windowWidth,
             model.windowHeight);
-            var show = function (fontSize) {
+            var show = F2(function (f,
+            fontSize) {
                return function ($) {
-                  return $Graphics$Element.leftAligned($Text.height(fontSize)($Text.typeface(_L.fromArray(["monospace"]))($Text.color($Color.white)($Text.fromString($)))));
+                  return $Graphics$Element.leftAligned(f($Text.height(fontSize)($Text.typeface(_L.fromArray(["monospace"]))($Text.color($Color.white)($Text.fromString($))))));
                };
-            };
+            });
             var drawText = function (list) {
                return function ($) {
-                  return c1($Graphics$Element.topLeft)($Graphics$Element.flow($Graphics$Element.down)($List.map(show(fontSize(list)))($)));
+                  return c1($Graphics$Element.topLeft)($Graphics$Element.flow($Graphics$Element.down)($List.map(show(function (x) {
+                     return x;
+                  })(fontSize(list)))($)));
                }($List.map(fixBlankLine)(list));
             };
             var clockText = drawText(_L.fromArray([A2($Basics._op["++"],
@@ -4109,25 +4130,37 @@ Elm.Main.make = function (_elm) {
                                                   ,""
                                                   ,A2($Basics._op["++"],
                                                   "The time is ",
-                                                  A2($Basics._op["++"],
-                                                  $Basics.toString(hour12),
-                                                  A2($Basics._op["++"],
-                                                  ":",
-                                                  A2($Basics._op["++"],
-                                                  minute00,
-                                                  A2($Basics._op["++"],
-                                                  " ",
-                                                  amPm)))))]));
+                                                  shortTime)]));
+            var drawText2 = F2(function (f,
+            list) {
+               return function ($) {
+                  return c1($Graphics$Element.topLeft)($Graphics$Element.flow($Graphics$Element.down)($List.map(show(f)(fontSize(list)))($)));
+               }($List.map(fixBlankLine)(list));
+            });
+            var overlayText = A2(drawText2,
+            $Text.color($Color.blue),
+            _L.fromArray([""
+                         ,""
+                         ,""
+                         ,""
+                         ,""
+                         ,""
+                         ,""
+                         ,""
+                         ,A2($Basics._op["++"],
+                         "                      ",
+                         shortTime)]));
             var screen = model.debug ? drawText(A2($List.map,
             $Basics.toString,
             model.errorLog)) : isClockTime(model.date) ? clockText : function () {
                var _v7 = model.photoName;
                switch (_v7.ctor)
                {case "Just":
-                  return c1($Graphics$Element.middle)(A3($Graphics$Element.fittedImage,
-                    model.windowWidth,
-                    model.windowHeight,
-                    _v7._0));
+                  return $Graphics$Element.layers(_L.fromArray([c1($Graphics$Element.middle)(A3($Graphics$Element.fittedImage,
+                                                               model.windowWidth,
+                                                               model.windowHeight,
+                                                               _v7._0))
+                                                               ,isShortTime(model.date) ? $Graphics$Element.opacity(0.75)(overlayText) : $Graphics$Element.empty]));
                   case "Nothing":
                   return drawText(_L.fromArray([""
                                                ,""
@@ -4136,7 +4169,7 @@ Elm.Main.make = function (_elm) {
                                                ,""
                                                ,""]));}
                _U.badCase($moduleName,
-               "between lines 153 and 164");
+               "between lines 174 and 189");
             }();
             return $Html.fromElement($Graphics$Element.color($Color.black)(screen));
          }();
@@ -4154,7 +4187,7 @@ Elm.Main.make = function (_elm) {
             case "[]":
             return _L.fromArray([]);}
          _U.badCase($moduleName,
-         "between lines 44 and 46");
+         "between lines 45 and 47");
       }();
    });
    var maybeNextEntry = F2(function (maybeEntry,
@@ -4174,17 +4207,17 @@ Elm.Main.make = function (_elm) {
                             case "[]":
                             return $Maybe.Just(entries._0);}
                          _U.badCase($moduleName,
-                         "between lines 54 and 56");
+                         "between lines 55 and 57");
                       }();
                     case "Nothing":
                     return $Maybe.Just(entries._0);}
                  _U.badCase($moduleName,
-                 "between lines 52 and 56");
+                 "between lines 53 and 57");
               }();
             case "[]":
             return $Maybe.Nothing;}
          _U.badCase($moduleName,
-         "between lines 50 and 56");
+         "between lines 51 and 57");
       }();
    });
    var maybeFirst = function (list) {
@@ -4195,7 +4228,7 @@ Elm.Main.make = function (_elm) {
             case "[]":
             return $Maybe.Nothing;}
          _U.badCase($moduleName,
-         "between lines 38 and 40");
+         "between lines 39 and 41");
       }();
    };
    var update = F2(function (action,
@@ -4252,7 +4285,7 @@ Elm.Main.make = function (_elm) {
                                ,$Basics.snd(action._0)]],
               model);}
          _U.badCase($moduleName,
-         "between lines 168 and 189");
+         "between lines 193 and 214");
       }();
    });
    var Errored = function (a) {
@@ -4311,7 +4344,7 @@ Elm.Main.make = function (_elm) {
                     _v31._0,
                     model);}
                _U.badCase($moduleName,
-               "on line 241, column 34 to 57");
+               "on line 266, column 34 to 57");
             }();
          }),
          app.model,
@@ -4365,6 +4398,7 @@ Elm.Main.make = function (_elm) {
                       ,main: main
                       ,isClockTime: isClockTime
                       ,isPhotoTime: isPhotoTime
+                      ,isShortTime: isShortTime
                       ,view: view
                       ,update: update
                       ,App: App

@@ -2,7 +2,8 @@ import Char
 import Color
 import Date exposing (Date, fromTime, day, dayOfWeek, hour, minute, second, month, year)
 import Graphics.Element exposing
-    (container, down, fittedImage, flow, image, leftAligned, middle, midLeft, topLeft)
+    (container, down, empty, fittedImage, flow, image, layers, leftAligned,
+     middle, midLeft, opacity, topLeft)
 import Html exposing (fromElement, Html)
 import Http
 import Json.Decode as Json
@@ -69,6 +70,7 @@ main = start
    , update = update
   }
 
+
 isClockTime : Date -> Bool
 isClockTime date = minute date `rem` 5 == 0
 
@@ -77,13 +79,18 @@ isPhotoTime : Date -> Bool
 isPhotoTime date = second date `rem` 15 == 0
 
 
+isShortTime : Date -> Bool
+isShortTime date = second date < 10
+
+
 view _ model =
   let
-    show fontSize =
+    show f fontSize =
       fromString
       >> Text.color Color.white
       >> Text.typeface ["monospace"]
       >> Text.height fontSize
+      >> f
       >> leftAligned
     c1 = container model.windowWidth model.windowHeight
     listWidth list =
@@ -98,7 +105,10 @@ view _ model =
     fontSize2 list = 1.85 * (ratio model.windowWidth (listWidth list))
     fontSize list = min (fontSize1 list) (fontSize2 list)
     fixBlankLine line = if line == "" then " " else line
-    drawText list = list |> map fixBlankLine |> map (fontSize list |> show) >> flow down >> c1 topLeft
+    drawText list =
+      list |> map fixBlankLine |> map (fontSize list |> show (\x -> x)) >> flow down >> c1 topLeft
+    drawText2 f list =
+      list |> map fixBlankLine |> map (fontSize list |> show f) >> flow down >> c1 topLeft
     dayNumber = day model.date
     dayName = case dayOfWeek model.date of
       Date.Mon -> "Monday"
@@ -126,23 +136,34 @@ view _ model =
       | dayNumber == 2 || dayNumber == 22 -> "st"
       | dayNumber == 3 || dayNumber == 23 -> "rd"
       | otherwise -> "th"
-    hour12 = if
-      | hour model.date == 0 -> 12
-      | hour model.date <= 12 -> hour model.date
-      | otherwise -> hour model.date - 12
+    hour12 = let h = hour model.date in if
+      | h == 0 -> 12
+      | h <= 12 -> h
+      | otherwise -> h - 12
     amPm = if hour model.date <= 11 then "AM" else "PM"
+    shortTime = 
+      toString hour12 ++ ":" ++ minute00 ++ " " ++ amPm
     minute00 =
-      if minute model.date < 10 then
-        "0" ++ toString (minute model.date)
-      else
-        toString (minute model.date)
-    clockText = drawText <|
-      ["Today is " ++ dayName,
-       monthName ++ " " ++ toString dayNumber ++ daySuffix,
-       toString (year model.date),
-       "",
-       "",
-       "The time is " ++ toString hour12 ++ ":" ++ minute00 ++ " " ++ amPm]
+      let m = minute model.date in (if m < 10 then "0" else "") ++ toString m
+    clockText = drawText
+      [ "Today is " ++ dayName
+       ,monthName ++ " " ++ toString dayNumber ++ daySuffix
+       ,toString (year model.date)
+       ,""
+       ,""
+       ,"The time is " ++ shortTime
+      ]
+    overlayText = drawText2 (Text.color Color.blue)
+      [ ""
+       ,""
+       ,""
+       ,""
+       ,""
+       ,""
+       ,""
+       ,""
+       ,"                      " ++ shortTime
+      ]
     screen = if
       | model.debug ->
           drawText
@@ -153,14 +174,18 @@ view _ model =
           case model.photoName of
             Nothing ->
               drawText
-                ["",
-                 "",
-                 "  Place photos in",
-                 "    photos folder",
-                 "",
-                 ""]
+                [ ""
+                 ,""
+                 ,"  Place photos in"
+                 ,"    photos folder"
+                 ,""
+                 ,""
+                ]
             Just path -> 
-              fittedImage model.windowWidth model.windowHeight path |> c1 middle
+              layers
+              [ fittedImage model.windowWidth model.windowHeight path |> c1 middle
+               ,if isShortTime model.date then overlayText |> opacity 0.75 else empty
+              ]
     in
       screen |> Graphics.Element.color Color.black |> fromElement
 
