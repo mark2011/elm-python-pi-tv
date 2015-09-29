@@ -7,6 +7,7 @@ home photo show, info center and automation - exploits elm language, python, ras
     - ok - go to selected channel
     - exit - (in channel) - return to channel menu
 - photo show channel
+  - photos are stored in /home/pi/Pictures
   - next photo every 15 seconds
   - display small clock overlay for first 10 seconds of every minute
   - remote control buttons

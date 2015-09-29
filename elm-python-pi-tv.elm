@@ -122,7 +122,7 @@ view _ model (width, height) =
             ["",
              "",
              "  Place photos in",
-             "    photos folder",
+             "    /home/pi/Pictures folder",
              "",
              ""]
           Just photoFilePath -> layers
