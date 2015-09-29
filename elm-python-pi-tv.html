@@ -506,7 +506,7 @@ Elm.Color.make = function (_elm) {
                         ,saturation: s};
               }();}
          _U.badCase($moduleName,
-         "between lines 114 and 121");
+         "between lines 114 and 118");
       }();
    };
    var HSLA = F4(function (a,
@@ -562,7 +562,7 @@ Elm.Color.make = function (_elm) {
                  color._3);
               }();}
          _U.badCase($moduleName,
-         "between lines 105 and 111");
+         "between lines 105 and 108");
       }();
    };
    var grayscale = function (p) {
@@ -917,7 +917,7 @@ Elm.Dict.make = function (_elm) {
               A3(foldr,f,acc,t._4)),
               t._3);}
          _U.badCase($moduleName,
-         "between lines 417 and 425");
+         "between lines 417 and 421");
       }();
    });
    var keys = function (dict) {
@@ -973,7 +973,7 @@ Elm.Dict.make = function (_elm) {
               A3(foldl,f,acc,dict._3)),
               dict._4);}
          _U.badCase($moduleName,
-         "between lines 406 and 414");
+         "between lines 406 and 410");
       }();
    });
    var isBBlack = function (dict) {
@@ -997,7 +997,7 @@ Elm.Dict.make = function (_elm) {
             case "Remove": return "Remove";
             case "Same": return "Same";}
          _U.badCase($moduleName,
-         "between lines 182 and 188");
+         "between lines 182 and 185");
       }();
    };
    var Same = {ctor: "Same"};
@@ -1027,10 +1027,10 @@ Elm.Dict.make = function (_elm) {
                       targetKey,
                       dict._3);}
                  _U.badCase($moduleName,
-                 "between lines 129 and 135");
+                 "between lines 129 and 132");
               }();}
          _U.badCase($moduleName,
-         "between lines 124 and 135");
+         "between lines 124 and 132");
       }();
    });
    var member = F2(function (key,
@@ -1041,7 +1041,7 @@ Elm.Dict.make = function (_elm) {
          {case "Just": return true;
             case "Nothing": return false;}
          _U.badCase($moduleName,
-         "between lines 138 and 146");
+         "between lines 138 and 140");
       }();
    });
    var max = function (dict) {
@@ -1057,7 +1057,7 @@ Elm.Dict.make = function (_elm) {
                         ,_1: dict._2};}
               return max(dict._4);}
          _U.badCase($moduleName,
-         "between lines 100 and 121");
+         "between lines 100 and 108");
       }();
    };
    var min = function (dict) {
@@ -1129,7 +1129,7 @@ Elm.Dict.make = function (_elm) {
               A2(map,f,dict._3),
               A2(map,f,dict._4));}
          _U.badCase($moduleName,
-         "between lines 394 and 403");
+         "between lines 394 and 399");
       }();
    });
    var showNColor = function (c) {
@@ -1178,7 +1178,7 @@ Elm.Dict.make = function (_elm) {
                    dict._4);}
               break;}
          _U.badCase($moduleName,
-         "between lines 154 and 166");
+         "between lines 154 and 162");
       }();
    };
    var blackish = function (t) {
@@ -1262,7 +1262,7 @@ Elm.Dict.make = function (_elm) {
               t._3,
               t._4);}
          _U.badCase($moduleName,
-         "between lines 386 and 391");
+         "between lines 386 and 388");
       }();
    };
    var balance_node = function (t) {
@@ -1729,7 +1729,7 @@ Elm.Dict.make = function (_elm) {
                case "Same":
                return updatedDict;}
             _U.badCase($moduleName,
-            "between lines 222 and 228");
+            "between lines 222 and 225");
          }();
       }();
    });
@@ -1989,7 +1989,7 @@ Elm.Graphics.Collage.make = function (_elm) {
                               ,["y",f.y + _v0._1]],
               f);}
          _U.badCase($moduleName,
-         "on line 226, column 7 to 35");
+         "on line 226, column 3 to 37");
       }();
    });
    var form = function (f) {
@@ -2671,7 +2671,7 @@ Elm.Graphics.Element.make = function (_elm) {
                  maxOrZero(ws),
                  $List.sum(hs));}
             _U.badCase($moduleName,
-            "between lines 362 and 373");
+            "between lines 362 and 368");
          }();
       }();
    });
@@ -2769,7 +2769,12 @@ Elm.Html.make = function (_elm) {
    _U = _N.Utils.make(_elm),
    _L = _N.List.make(_elm),
    $moduleName = "Html",
+   $Basics = Elm.Basics.make(_elm),
    $Graphics$Element = Elm.Graphics.Element.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
    $VirtualDom = Elm.VirtualDom.make(_elm);
    var fromElement = $VirtualDom.fromElement;
    var toElement = $VirtualDom.toElement;
@@ -2997,6 +3002,7 @@ Elm.Http.make = function (_elm) {
    $Maybe = Elm.Maybe.make(_elm),
    $Native$Http = Elm.Native.Http.make(_elm),
    $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
    $String = Elm.String.make(_elm),
    $Task = Elm.Task.make(_elm),
    $Time = Elm.Time.make(_elm);
@@ -3691,7 +3697,7 @@ Elm.List.make = function (_elm) {
             case "[]":
             return $Maybe.Nothing;}
          _U.badCase($moduleName,
-         "between lines 87 and 95");
+         "between lines 87 and 89");
       }();
    };
    var head = function (list) {
@@ -3702,7 +3708,7 @@ Elm.List.make = function (_elm) {
             case "[]":
             return $Maybe.Nothing;}
          _U.badCase($moduleName,
-         "between lines 75 and 84");
+         "between lines 75 and 77");
       }();
    };
    _op["::"] = $Native$List.cons;
@@ -3741,7 +3747,7 @@ Elm.List.make = function (_elm) {
             return A2(_op["::"],_v15._0,xs);
             case "Nothing": return xs;}
          _U.badCase($moduleName,
-         "between lines 179 and 186");
+         "between lines 179 and 181");
       }();
    });
    var filterMap = F2(function (f,
@@ -3888,7 +3894,7 @@ Elm.List.make = function (_elm) {
             case "[]":
             return _L.fromArray([]);}
          _U.badCase($moduleName,
-         "between lines 350 and 361");
+         "between lines 350 and 356");
       }();
    });
    _elm.List.values = {_op: _op
@@ -3947,371 +3953,188 @@ Elm.Main.make = function (_elm) {
    $Html = Elm.Html.make(_elm),
    $Http = Elm.Http.make(_elm),
    $Json$Decode = Elm.Json.Decode.make(_elm),
+   $Json$Encode = Elm.Json.Encode.make(_elm),
    $Keyboard = Elm.Keyboard.make(_elm),
    $List = Elm.List.make(_elm),
    $Maybe = Elm.Maybe.make(_elm),
+   $Module = Elm.Module.make(_elm),
+   $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm),
    $String = Elm.String.make(_elm),
    $Task = Elm.Task.make(_elm),
    $Text = Elm.Text.make(_elm),
    $Time = Elm.Time.make(_elm),
    $Window = Elm.Window.make(_elm);
-   var pollingResults = $Signal.mailbox($Maybe.Nothing);
-   var sendPolling = function (actionConstructor) {
-      return function ($) {
-         return $Signal.send(pollingResults.address)($Maybe.Just(actionConstructor($)));
-      };
-   };
    var viewMailbox = $Signal.mailbox($Maybe.Nothing);
-   var viewMailboxAddress = A2($Signal.forwardTo,
-   viewMailbox.address,
-   $Maybe.Just);
-   var App = F3(function (a,b,c) {
-      return {_: {}
-             ,model: a
-             ,update: c
-             ,view: b};
-   });
-   var isShortTime = function (date) {
-      return _U.cmp($Date.second(date),
-      10) < 0;
-   };
-   var isPhotoTime = function (date) {
-      return _U.eq(A2($Basics.rem,
-      $Date.second(date),
-      15),
-      0);
-   };
-   var isClockTime = function (date) {
-      return _U.eq(A2($Basics.rem,
-      $Date.minute(date),
-      5),
-      0);
-   };
-   var view = F2(function (_v0,
-   model) {
-      return function () {
+   var emptyChannel = {_: {}
+                      ,maybeKey: $Maybe.Nothing
+                      ,records: _L.fromArray([])};
+   var responseMailbox = $Signal.mailbox($Maybe.Nothing);
+   var encodeQuery = function ($) {
+      return $Json$Encode.encode(0)($Json$Encode.object($List.map(function (_v0) {
          return function () {
-            var minute00 = function () {
-               var m = $Date.minute(model.date);
-               return A2($Basics._op["++"],
-               _U.cmp(m,10) < 0 ? "0" : "",
-               $Basics.toString(m));
-            }();
-            var amPm = _U.cmp($Date.hour(model.date),
-            11) < 1 ? "AM" : "PM";
-            var hour12 = function () {
-               var h = $Date.hour(model.date);
-               return _U.eq(h,
-               0) ? 12 : _U.cmp(h,
-               12) < 1 ? h : h - 12;
-            }();
-            var shortTime = A2($Basics._op["++"],
-            $Basics.toString(hour12),
-            A2($Basics._op["++"],
-            ":",
-            A2($Basics._op["++"],
-            minute00,
-            A2($Basics._op["++"],
-            " ",
-            amPm))));
-            var monthName = function () {
-               var _v2 = $Date.month(model.date);
-               switch (_v2.ctor)
-               {case "Apr": return "April";
-                  case "Aug": return "August";
-                  case "Dec": return "December";
-                  case "Feb": return "February";
-                  case "Jan": return "January";
-                  case "Jul": return "July";
-                  case "Jun": return "June";
-                  case "Mar": return "March";
-                  case "May": return "May";
-                  case "Nov": return "November";
-                  case "Oct": return "October";
-                  case "Sep": return "September";}
-               _U.badCase($moduleName,
-               "between lines 121 and 134");
-            }();
-            var dayName = function () {
-               var _v3 = $Date.dayOfWeek(model.date);
-               switch (_v3.ctor)
-               {case "Fri": return "Friday";
-                  case "Mon": return "Monday";
-                  case "Sat": return "Saturday";
-                  case "Sun": return "Sunday";
-                  case "Thu": return "Thursday";
-                  case "Tue": return "Tuesday";
-                  case "Wed": return "Wednesday";}
-               _U.badCase($moduleName,
-               "between lines 113 and 121");
-            }();
-            var dayNumber = $Date.day(model.date);
-            var daySuffix = _U.eq(dayNumber,
-            1) || (_U.eq(dayNumber,
-            21) || _U.eq(dayNumber,
-            31)) ? "st" : _U.eq(dayNumber,
-            2) || _U.eq(dayNumber,
-            22) ? "st" : _U.eq(dayNumber,
-            3) || _U.eq(dayNumber,
-            23) ? "rd" : "th";
-            var fixBlankLine = function (line) {
-               return _U.eq(line,
-               "") ? " " : line;
-            };
-            var ratio = F2(function (x,y) {
-               return $Basics.toFloat($Basics.floor(0.85 * $Basics.toFloat(x) / $Basics.toFloat(y)));
-            });
-            var fontSize1 = function (list) {
-               return A2(ratio,
-               model.windowHeight,
-               A2($Basics.min,
-               $List.length(list),
-               10));
-            };
-            var listWidth = function (list) {
-               return function () {
-                  var listWidth$ = F2(function (n,
-                  list) {
-                     return function () {
-                        switch (list.ctor)
-                        {case "::":
-                           return A2(listWidth$,
-                             A2($Basics.max,
-                             n,
-                             $String.length(list._0)),
-                             list._1);
-                           case "[]": return n;}
-                        _U.badCase($moduleName,
-                        "between lines 98 and 101");
-                     }();
-                  });
-                  return A2(listWidth$,1,list);
-               }();
-            };
-            var fontSize2 = function (list) {
-               return 1.85 * A2(ratio,
-               model.windowWidth,
-               listWidth(list));
-            };
-            var fontSize = function (list) {
-               return A2($Basics.min,
-               fontSize1(list),
-               fontSize2(list));
-            };
-            var c1 = A2($Graphics$Element.container,
-            model.windowWidth,
-            model.windowHeight);
-            var show = F2(function (f,
-            fontSize) {
-               return function ($) {
-                  return $Graphics$Element.leftAligned(f($Text.height(fontSize)($Text.typeface(_L.fromArray(["monospace"]))($Text.color($Color.white)($Text.fromString($))))));
-               };
-            });
-            var drawText = function (list) {
-               return function ($) {
-                  return c1($Graphics$Element.topLeft)($Graphics$Element.flow($Graphics$Element.down)($List.map(show(function (x) {
-                     return x;
-                  })(fontSize(list)))($)));
-               }($List.map(fixBlankLine)(list));
-            };
-            var clockText = drawText(_L.fromArray([A2($Basics._op["++"],
-                                                  "Today is ",
-                                                  dayName)
-                                                  ,A2($Basics._op["++"],
-                                                  monthName,
-                                                  A2($Basics._op["++"],
-                                                  " ",
-                                                  A2($Basics._op["++"],
-                                                  $Basics.toString(dayNumber),
-                                                  daySuffix)))
-                                                  ,$Basics.toString($Date.year(model.date))
-                                                  ,""
-                                                  ,""
-                                                  ,A2($Basics._op["++"],
-                                                  "The time is ",
-                                                  shortTime)]));
-            var drawText2 = F2(function (f,
-            list) {
-               return function ($) {
-                  return c1($Graphics$Element.topLeft)($Graphics$Element.flow($Graphics$Element.down)($List.map(show(f)(fontSize(list)))($)));
-               }($List.map(fixBlankLine)(list));
-            });
-            var overlayText = A2(drawText2,
-            $Text.color($Color.blue),
-            _L.fromArray([""
-                         ,""
-                         ,""
-                         ,""
-                         ,""
-                         ,""
-                         ,""
-                         ,""
-                         ,A2($Basics._op["++"],
-                         "                      ",
-                         shortTime)]));
-            var screen = model.debug ? drawText(A2($List.map,
-            $Basics.toString,
-            model.errorLog)) : isClockTime(model.date) ? clockText : function () {
-               var _v7 = model.photoName;
-               switch (_v7.ctor)
-               {case "Just":
-                  return $Graphics$Element.layers(_L.fromArray([c1($Graphics$Element.middle)(A3($Graphics$Element.fittedImage,
-                                                               model.windowWidth,
-                                                               model.windowHeight,
-                                                               _v7._0))
-                                                               ,isShortTime(model.date) ? $Graphics$Element.opacity(0.75)(overlayText) : $Graphics$Element.empty]));
-                  case "Nothing":
-                  return drawText(_L.fromArray([""
-                                               ,""
-                                               ,"  Place photos in"
-                                               ,"    photos folder"
-                                               ,""
-                                               ,""]));}
-               _U.badCase($moduleName,
-               "between lines 174 and 189");
-            }();
-            return $Html.fromElement($Graphics$Element.color($Color.black)(screen));
+            switch (_v0.ctor)
+            {case "_Tuple2":
+               return {ctor: "_Tuple2"
+                      ,_0: _v0._0
+                      ,_1: $Json$Encode.string(_v0._1)};}
+            _U.badCase($moduleName,
+            "on line 216, column 58 to 71");
          }();
-      }();
-   });
-   var following = F2(function (a,
-   list) {
-      return function () {
-         switch (list.ctor)
-         {case "::":
-            return _U.eq(list._0,
-              a) ? list._1 : A2(following,
-              a,
-              list._1);
-            case "[]":
-            return _L.fromArray([]);}
-         _U.badCase($moduleName,
-         "between lines 45 and 47");
-      }();
-   });
-   var maybeNextEntry = F2(function (maybeEntry,
-   entries) {
-      return function () {
-         switch (entries.ctor)
-         {case "::": return function () {
-                 switch (maybeEntry.ctor)
-                 {case "Just":
-                    return function () {
-                         var _v17 = A2(following,
-                         maybeEntry._0,
-                         entries);
-                         switch (_v17.ctor)
-                         {case "::":
-                            return $Maybe.Just(_v17._0);
-                            case "[]":
-                            return $Maybe.Just(entries._0);}
-                         _U.badCase($moduleName,
-                         "between lines 55 and 57");
-                      }();
-                    case "Nothing":
-                    return $Maybe.Just(entries._0);}
-                 _U.badCase($moduleName,
-                 "between lines 53 and 57");
-              }();
-            case "[]":
-            return $Maybe.Nothing;}
-         _U.badCase($moduleName,
-         "between lines 51 and 57");
-      }();
-   });
-   var maybeFirst = function (list) {
-      return function () {
-         switch (list.ctor)
-         {case "::":
-            return $Maybe.Just(list._0);
-            case "[]":
-            return $Maybe.Nothing;}
-         _U.badCase($moduleName,
-         "between lines 39 and 41");
-      }();
+      })($)));
    };
-   var update = F2(function (action,
-   model) {
+   var quote = function (s) {
+      return A2($Basics._op["++"],
+      "\"",
+      A2($Basics._op["++"],s,"\""));
+   };
+   var moveKey = F2(function (keyedChannel,
+   direction) {
       return function () {
-         switch (action.ctor)
-         {case "Clock":
-            return isPhotoTime(model.date) ? _U.replace([["date"
-                                                         ,action._0]
-                                                        ,["photoName"
-                                                         ,A2(maybeNextEntry,
-                                                         model.photoName,
-                                                         model.photos)]],
-              model) : _U.replace([["date"
-                                   ,action._0]],
-              model);
-            case "Errored":
-            return _U.replace([["errorLog"
-                               ,A2($List._op["::"],
-                               action._0,
-                               model.errorLog)]],
-              model);
-            case "KeyPressed":
-            switch (action._0 + "")
-              {case "0":
-                 return _U.replace([["photoName"
-                                    ,maybeFirst(model.photos)]],
-                   model);
-                 case "d":
-                 return _U.replace([["debug"
-                                    ,$Basics.not(model.debug)]],
-                   model);
-                 case "h":
-                 return _U.replace([["photoName"
-                                    ,A2(maybeNextEntry,
-                                    model.photoName,
-                                    $List.reverse(model.photos))]],
-                   model);
-                 case "l":
-                 return _U.replace([["photoName"
-                                    ,A2(maybeNextEntry,
-                                    model.photoName,
-                                    model.photos)]],
-                   model);}
-              return model;
-            case "SetPhotosList":
-            return _U.replace([["photos"
-                               ,action._0]],
-              model);
-            case "SetWindowSize":
-            return _U.replace([["windowWidth"
-                               ,$Basics.fst(action._0)]
-                              ,["windowHeight"
-                               ,$Basics.snd(action._0)]],
-              model);}
-         _U.badCase($moduleName,
-         "between lines 193 and 214");
+         var maybeNextKey = F2(function (channel,
+         g) {
+            return function () {
+               var _v4 = {ctor: "_Tuple2"
+                         ,_0: channel.maybeKey
+                         ,_1: $List.map(function (_) {
+                            return _.key;
+                         })(g(channel.records))};
+               switch (_v4.ctor)
+               {case "_Tuple2":
+                  switch (_v4._1.ctor)
+                    {case "[]":
+                       return $Maybe.Nothing;}
+                    switch (_v4._0.ctor)
+                    {case "Just":
+                       switch (_v4._1.ctor)
+                         {case "::":
+                            return $Maybe.Just(A3($Module.nextEntry,
+                              _v4._1._0,
+                              _v4._1,
+                              _v4._0._0));}
+                         break;
+                       case "Nothing":
+                       switch (_v4._1.ctor)
+                         {case "::":
+                            return $Maybe.Just(_v4._1._0);}
+                         break;}
+                    break;}
+               _U.badCase($moduleName,
+               "between lines 143 and 147");
+            }();
+         });
+         return _U.replace([["maybeKey"
+                            ,function () {
+                               switch (direction.ctor)
+                               {case "Backward":
+                                  return A2(maybeNextKey,
+                                    keyedChannel,
+                                    $List.reverse);
+                                  case "Forward":
+                                  return A2(maybeNextKey,
+                                    keyedChannel,
+                                    $Basics.identity);
+                                  case "Rewind":
+                                  return function () {
+                                       var _v13 = keyedChannel.records;
+                                       switch (_v13.ctor)
+                                       {case "::":
+                                          return $Maybe.Just(_v13._0.key);
+                                          case "[]":
+                                          return $Maybe.Nothing;}
+                                       _U.badCase($moduleName,
+                                       "between lines 152 and 154");
+                                    }();
+                                  case "Stay":
+                                  return keyedChannel.maybeKey;}
+                               _U.badCase($moduleName,
+                               "between lines 148 and 154");
+                            }()]],
+         keyedChannel);
       }();
    });
-   var Errored = function (a) {
-      return {ctor: "Errored"
+   var updateRecords = F2(function (keyedChannel,
+   newRecords) {
+      return function () {
+         var newMaybeKey = function () {
+            var _v16 = {ctor: "_Tuple3"
+                       ,_0: keyedChannel.maybeKey
+                       ,_1: keyedChannel.records
+                       ,_2: newRecords};
+            switch (_v16.ctor)
+            {case "_Tuple3":
+               switch (_v16._0.ctor)
+                 {case "Nothing":
+                    switch (_v16._2.ctor)
+                      {case "::":
+                         return $Maybe.Just(_v16._2._0.key);}
+                      break;}
+                 return _v16._0;}
+            _U.badCase($moduleName,
+            "between lines 135 and 138");
+         }();
+         return _U.replace([["records"
+                            ,newRecords]
+                           ,["maybeKey",newMaybeKey]],
+         keyedChannel);
+      }();
+   });
+   var channel = function (keys) {
+      return updateRecords(emptyChannel)($List.map(function (k) {
+         return {_: {},key: k};
+      })(keys));
+   };
+   var isEvery = F3(function (k,
+   f,
+   date) {
+      return _U.eq(A2($Basics.rem,
+      f(date),
+      k),
+      0);
+   });
+   var isPollTime = A2(isEvery,
+   10,
+   $Date.second);
+   var isShowClockTime = A2(isEvery,
+   5,
+   $Date.minute);
+   var isAdvancePhotoTime = function (date) {
+      return A3(isEvery,
+      15,
+      $Date.second,
+      date) && $Basics.not(isShowClockTime(date));
+   };
+   var fadeTime = 10.0 * $Time.second;
+   var BlinkLight = F2(function (a,
+   b) {
+      return {ctor: "BlinkLight"
+             ,_0: a
+             ,_1: b};
+   });
+   var SendKey = function (a) {
+      return {ctor: "SendKey"
              ,_0: a};
    };
-   var sendError = sendPolling(Errored);
+   var GetLightsList = function (a) {
+      return {ctor: "GetLightsList"
+             ,_0: a};
+   };
+   var GetPhotosList = {ctor: "GetPhotosList"};
+   var GetConfig = {ctor: "GetConfig"};
+   var LogMessage = function (a) {
+      return {ctor: "LogMessage"
+             ,_0: a};
+   };
+   var NoRequest = {ctor: "NoRequest"};
+   var Error = function (a) {
+      return {ctor: "Error",_0: a};
+   };
+   var SetLightsList = function (a) {
+      return {ctor: "SetLightsList"
+             ,_0: a};
+   };
    var SetPhotosList = function (a) {
       return {ctor: "SetPhotosList"
-             ,_0: a};
-   };
-   var sendPhotos = sendPolling(SetPhotosList);
-   var pollingRequests = Elm.Native.Task.make(_elm).performSignal("pollingRequests",
-   $Signal.map(function (_v29) {
-      return function () {
-         return A2($Task.onError,
-         A2($Task.andThen,
-         A2($Http.get,
-         $Json$Decode.list($Json$Decode.string),
-         "http://localhost:3000/photos"),
-         sendPhotos),
-         sendError);
-      }();
-   })($Time.every(10 * $Time.second)));
-   var SetWindowSize = function (a) {
-      return {ctor: "SetWindowSize"
              ,_0: a};
    };
    var KeyPressed = function (a) {
@@ -4321,94 +4144,621 @@ Elm.Main.make = function (_elm) {
    var Clock = function (a) {
       return {ctor: "Clock",_0: a};
    };
-   var start = function (app) {
+   var SetConfig = function (a) {
+      return {ctor: "SetConfig"
+             ,_0: a};
+   };
+   var RequestDone = {ctor: "RequestDone"};
+   var Stay = {ctor: "Stay"};
+   var Rewind = {ctor: "Rewind"};
+   var Backward = {ctor: "Backward"};
+   var Forward = {ctor: "Forward"};
+   var Lights = {ctor: "Lights"};
+   var Photos = {ctor: "Photos"};
+   var Guide = {ctor: "Guide"};
+   var view = F3(function (_v22,
+   model,
+   _v23) {
       return function () {
-         var asActionSignal = function (f) {
-            return $Signal.map(function ($) {
-               return $Maybe.Just(f($));
-            });
-         };
-         var windowSize = asActionSignal(SetWindowSize)($Window.dimensions);
-         var clock = asActionSignal(function ($) {
-            return Clock($Date.fromTime($));
-         })($Time.every($Time.second));
-         var keys = asActionSignal(function ($) {
-            return KeyPressed($Char.fromCode($));
-         })($Keyboard.presses);
-         var model = A3($Signal.foldp,
-         F2(function (_v31,model) {
+         switch (_v23.ctor)
+         {case "_Tuple2":
             return function () {
-               switch (_v31.ctor)
-               {case "Just":
-                  return A2(app.update,
-                    _v31._0,
-                    model);}
-               _U.badCase($moduleName,
-               "on line 266, column 34 to 57");
+                 return function () {
+                    var prefix = F2(function (channel,
+                    key) {
+                       return _U.eq($Maybe.Just(key),
+                       function (_) {
+                          return _.maybeKey;
+                       }(channel(model))) ? "*" : " ";
+                    });
+                    var overlayOpacity = $Basics.max(0.0)(1.0 - $Module.timeSinceMinute(model.date) / fadeTime);
+                    var ratio = F2(function (x,y) {
+                       return $Basics.toFloat($Basics.floor(0.85 * $Basics.toFloat(x) / $Basics.toFloat(y)));
+                    });
+                    var fontSize1 = function (list) {
+                       return ratio(_v23._1)($List.length(list));
+                    };
+                    var fontSize2 = function (list) {
+                       return F2(function (x,y) {
+                          return x * y;
+                       })(1.85)(ratio(_v23._0)(A2($List.foldl,
+                       $Basics.max,
+                       1)(A2($List.map,
+                       $String.length,
+                       list))));
+                    };
+                    var fontSize = function (list) {
+                       return A2($Basics.min,
+                       fontSize1(list),
+                       fontSize2(list));
+                    };
+                    var fullScreen = A2($Graphics$Element.container,
+                    _v23._0,
+                    _v23._1);
+                    var drawLines2 = function (lines) {
+                       return function () {
+                          var drawLine2 = function (_v28) {
+                             return function () {
+                                switch (_v28.ctor)
+                                {case "_Tuple2":
+                                   return $Graphics$Element.leftAligned(_v28._1($Text.color($Color.white)($Text.height(fontSize($List.map($Basics.fst)(lines)))($Text.typeface(_L.fromArray(["monospace"]))($Text.fromString(_U.eq(_v28._0,
+                                     "") ? " " : _v28._0))))));}
+                                _U.badCase($moduleName,
+                                "between lines 69 and 75");
+                             }();
+                          };
+                          return fullScreen($Graphics$Element.topLeft)($Graphics$Element.flow($Graphics$Element.down)($List.map(drawLine2)(lines)));
+                       }();
+                    };
+                    var drawLines = function ($) {
+                       return drawLines2($List.map(function (line) {
+                          return {ctor: "_Tuple2"
+                                 ,_0: line
+                                 ,_1: $Basics.identity};
+                       })($));
+                    };
+                    var clockText = drawLines(_L.fromArray([A2($Basics._op["++"],
+                                                           "Today is ",
+                                                           $Module.dayName(model.date))
+                                                           ,A2($Basics._op["++"],
+                                                           $Module.monthName(model.date),
+                                                           A2($Basics._op["++"],
+                                                           " ",
+                                                           $Module.dayWithSuffix(model.date)))
+                                                           ,$Basics.toString($Date.year(model.date))
+                                                           ,""
+                                                           ,""
+                                                           ,A2($Basics._op["++"],
+                                                           "The time is ",
+                                                           $Module.shortTime(model.date))]));
+                    var overlayText = drawLines(_L.fromArray([""
+                                                             ,""
+                                                             ,""
+                                                             ,""
+                                                             ,""
+                                                             ,""
+                                                             ,""
+                                                             ,""
+                                                             ,""
+                                                             ,A2($Basics._op["++"],
+                                                             "                        ",
+                                                             $Module.shortTime(model.date))]));
+                    var screen = model.debug ? drawLines(model.log) : _U.eq(model.channel,
+                    Guide) ? drawLines($List.map(function (_v32) {
+                       return function () {
+                          return A2($Basics._op["++"],
+                          A2(prefix,
+                          function (_) {
+                             return _.guideChannel;
+                          },
+                          _v32.key),
+                          $Basics.toString(_v32.key));
+                       }();
+                    })(model.guideChannel.records)) : _U.eq(model.channel,
+                    Lights) ? !_U.eq(model.config.hueToken,
+                    "") ? drawLines2($List.map(function (_v34) {
+                       return function () {
+                          return function () {
+                             var color = $Basics.not(_v34.reachable) ? $Color.red : $Basics.not(_v34.on) ? $Color.blue : $Color.white;
+                             return {ctor: "_Tuple2"
+                                    ,_0: A2($Basics._op["++"],
+                                    A2(prefix,
+                                    function (_) {
+                                       return _.lightsChannel;
+                                    },
+                                    _v34.key),
+                                    _v34.name)
+                                    ,_1: $Text.color(color)};
+                          }();
+                       }();
+                    })(model.lightsChannel.records)) : drawLines(_L.fromArray([""
+                                                                              ,""
+                                                                              ,""
+                                                                              ," Hue token is not configured"
+                                                                              ,""
+                                                                              ,""
+                                                                              ,""])) : model.photosChannel.displayClock ? clockText : function () {
+                       var _v36 = model.photosChannel.maybeKey;
+                       switch (_v36.ctor)
+                       {case "Just":
+                          return $Graphics$Element.layers(_L.fromArray([fullScreen($Graphics$Element.middle)(A3($Graphics$Element.fittedImage,
+                                                                       _v23._0,
+                                                                       _v23._1,
+                                                                       _v36._0))
+                                                                       ,$Graphics$Element.opacity(overlayOpacity)(overlayText)]));
+                          case "Nothing":
+                          return drawLines(_L.fromArray([""
+                                                        ,""
+                                                        ,"  Place photos in"
+                                                        ,"    photos folder"
+                                                        ,""
+                                                        ,""]));}
+                       _U.badCase($moduleName,
+                       "between lines 120 and 131");
+                    }();
+                    return $Html.fromElement($Graphics$Element.color($Color.black)(screen));
+                 }();
+              }();}
+         _U.badCase($moduleName,
+         "between lines 60 and 132");
+      }();
+   });
+   var LightBaseRecord = F3(function (a,
+   b,
+   c) {
+      return {_: {}
+             ,name: a
+             ,on: b
+             ,reachable: c};
+   });
+   var PhotoBaseRecord = function (a) {
+      return {_: {},modTime: a};
+   };
+   var KeyedChannel = F2(function (a,
+   b) {
+      return {_: {}
+             ,maybeKey: a
+             ,records: b};
+   });
+   _op["?"] = F2(function (maybe,
+   $default) {
+      return A2($Maybe.withDefault,
+      $default,
+      maybe);
+   });
+   var update = F2(function (action,
+   modelWithCompletedRequest) {
+      return function () {
+         var model1 = _U.replace([["requestQueue"
+                                  ,A2(_op["?"],
+                                  $List.tail(modelWithCompletedRequest.requestQueue),
+                                  _L.fromArray([]))]],
+         modelWithCompletedRequest);
+         var $ = function () {
+            var _v38 = {ctor: "_Tuple2"
+                       ,_0: model1.requestQueue
+                       ,_1: model1.log};
+            switch (_v38.ctor)
+            {case "_Tuple2":
+               switch (_v38._0.ctor)
+                 {case "[]":
+                    switch (_v38._1.ctor)
+                      {case "::":
+                         return {ctor: "_Tuple2"
+                                ,_0: _L.fromArray([LogMessage(_v38._1._0)])
+                                ,_1: _v38._1._1};}
+                      break;}
+                 break;}
+            return _v38;
+         }(),
+         newRequestQueue = $._0,
+         newLog = $._1;
+         var model = _U.replace([["requestQueue"
+                                 ,newRequestQueue]
+                                ,["log",newLog]],
+         model1);
+         var guideChannel = model.guideChannel;
+         var photosChannel = model.photosChannel;
+         var lightsChannel = model.lightsChannel;
+         var log = function (message) {
+            return A2($Basics._op["++"],
+            model.log,
+            _L.fromArray([$Basics.toString(message)]));
+         };
+         return function () {
+            switch (action.ctor)
+            {case "Clock":
+               return function () {
+                    var moved = moveKey(photosChannel)(isAdvancePhotoTime(action._0) ? Forward : Stay);
+                    var newPhotosChannel = _U.replace([["displayClock"
+                                                       ,isShowClockTime(action._0)]],
+                    moved);
+                    return _U.replace([["date"
+                                       ,action._0]
+                                      ,["requestQueue"
+                                       ,A3($Module.appendIf,
+                                       isPollTime(action._0),
+                                       model.requestQueue,
+                                       _L.fromArray([GetPhotosList
+                                                    ,GetLightsList(model.config.hueToken)]))]
+                                      ,["photosChannel"
+                                       ,newPhotosChannel]],
+                    model);
+                 }();
+               case "Error":
+               return _U.replace([["log"
+                                  ,A2($Basics._op["++"],
+                                  model.log,
+                                  _L.fromArray([action._0]))]],
+                 model);
+               case "KeyPressed":
+               return function () {
+                    switch (action._0 + "")
+                    {case "d":
+                       return _U.replace([["debug"
+                                          ,$Basics.not(model.debug)]],
+                         model);
+                       case "e":
+                       return _U.replace([["channel"
+                                          ,Guide]],
+                         model);}
+                    return function () {
+                       var _v51 = model.channel;
+                       switch (_v51.ctor)
+                       {case "Guide":
+                          return function () {
+                               var f = function (direction) {
+                                  return _U.replace([["guideChannel"
+                                                     ,A2(moveKey,
+                                                     guideChannel,
+                                                     direction)]],
+                                  model);
+                               };
+                               return function () {
+                                  switch (action._0 + "")
+                                  {case "j": return f(Forward);
+                                     case "k": return f(Backward);
+                                     case "y":
+                                     return _U.replace([["channel"
+                                                        ,A2(_op["?"],
+                                                        guideChannel.maybeKey,
+                                                        Guide)]],
+                                       model);}
+                                  return model;
+                               }();
+                            }();
+                          case "Lights":
+                          return function () {
+                               switch (action._0 + "")
+                               {case "y":
+                                  return _U.replace([["requestQueue"
+                                                     ,A2($Basics._op["++"],
+                                                     model.requestQueue,
+                                                     _L.fromArray([BlinkLight(model.config.hueToken)(A2(_op["?"],
+                                                     lightsChannel.maybeKey,
+                                                     ""))]))]],
+                                    model);}
+                               return function () {
+                                  var f = function (direction) {
+                                     return _U.replace([["lightsChannel"
+                                                        ,A2(moveKey,
+                                                        lightsChannel,
+                                                        direction)]],
+                                     model);
+                                  };
+                                  return function () {
+                                     switch (action._0 + "")
+                                     {case "0": return f(Rewind);
+                                        case "j": return f(Forward);
+                                        case "k": return f(Backward);}
+                                     return model;
+                                  }();
+                               }();
+                            }();
+                          case "Photos":
+                          return function () {
+                               var f = function (direction) {
+                                  return _U.replace([["photosChannel"
+                                                     ,A2(moveKey,
+                                                     photosChannel,
+                                                     direction)]],
+                                  model);
+                               };
+                               return function () {
+                                  switch (action._0 + "")
+                                  {case "0": return f(Rewind);
+                                     case "h": return f(Backward);
+                                     case "l": return f(Forward);}
+                                  return model;
+                               }();
+                            }();}
+                       _U.badCase($moduleName,
+                       "between lines 189 and 213");
+                    }();
+                 }();
+               case "RequestDone":
+               return model;
+               case "SetConfig":
+               return _U.replace([["config"
+                                  ,action._0]
+                                 ,["log",log(action._0)]],
+                 model);
+               case "SetLightsList":
+               return _U.replace([["lightsChannel"
+                                  ,A2(updateRecords,
+                                  lightsChannel,
+                                  action._0)]],
+                 model);
+               case "SetPhotosList":
+               return _U.replace([["photosChannel"
+                                  ,A2(updateRecords,
+                                  photosChannel,
+                                  action._0)]],
+                 model);}
+            _U.badCase($moduleName,
+            "between lines 168 and 213");
+         }();
+      }();
+   });
+   var modelSignal = A3($Signal.foldp,
+   F2(function (_v56,model) {
+      return function () {
+         switch (_v56.ctor)
+         {case "Just": return A2(update,
+              _v56._0,
+              model);}
+         _U.badCase($moduleName,
+         "on line 283, column 30 to 49");
+      }();
+   }),
+   {_: {}
+   ,channel: Guide
+   ,config: {_: {},hueToken: ""}
+   ,date: $Date.fromTime(0)
+   ,debug: false
+   ,guideChannel: channel(_L.fromArray([Photos
+                                       ,Lights]))
+   ,lightsChannel: emptyChannel
+   ,log: _L.fromArray([])
+   ,photosChannel: _U.insert("displayClock",
+   false,
+   emptyChannel)
+   ,requestQueue: _L.fromArray([GetConfig
+                               ,SendKey("F11")
+                               ,GetPhotosList])},
+   $Signal.mergeMany(_L.fromArray([viewMailbox.signal
+                                  ,responseMailbox.signal
+                                  ,A2($Signal.map,
+                                  function ($) {
+                                     return $Maybe.Just(Clock($Date.fromTime($)));
+                                  },
+                                  $Time.every($Time.second))
+                                  ,A2($Signal.map,
+                                  function ($) {
+                                     return $Maybe.Just(KeyPressed($Char.fromCode($)));
+                                  },
+                                  $Keyboard.presses)])));
+   var requestPort = Elm.Native.Task.make(_elm).performSignal("requestPort",
+   function () {
+      var requestDone = $Json$Decode.object1(function (_v59) {
+         return function () {
+            return RequestDone;
+         }();
+      })($Json$Decode.list($Json$Decode.string));
+      var sendResponse = function ($) {
+         return $Signal.send(responseMailbox.address)($Maybe.Just($));
+      };
+      var get = F2(function (endPoint,
+      responseDecoder) {
+         return A2($Task.onError,
+         A2($Task.andThen,
+         A2($Http.get,
+         responseDecoder,
+         endPoint),
+         sendResponse),
+         function ($) {
+            return sendResponse(Error($Basics.toString($)));
+         });
+      });
+      var put = F2(function (endPoint,
+      body) {
+         return A2($Task.onError,
+         A2($Task.andThen,
+         A2($Http.send,
+         $Http.defaultSettings,
+         {_: {}
+         ,body: body
+         ,headers: _L.fromArray([])
+         ,url: endPoint
+         ,verb: "PUT"}),
+         function (_v61) {
+            return function () {
+               return sendResponse(RequestDone);
             }();
          }),
-         app.model,
-         $Signal.mergeMany(_L.fromArray([viewMailbox.signal
-                                        ,clock
-                                        ,keys
-                                        ,windowSize
-                                        ,pollingResults.signal])));
-         return A2($Signal.map,
-         app.view(viewMailboxAddress),
-         model);
-      }();
-   };
-   var main = start({_: {}
-                    ,model: {_: {}
-                            ,date: $Date.fromTime(0)
-                            ,debug: false
-                            ,errorLog: _L.fromArray([])
-                            ,photoName: $Maybe.Nothing
-                            ,photos: _L.fromArray([])
-                            ,windowHeight: 768
-                            ,windowWidth: 1024}
-                    ,update: update
-                    ,view: view});
-   var Model = F7(function (a,
-   b,
-   c,
-   d,
-   e,
-   f,
-   g) {
-      return {_: {}
-             ,date: b
-             ,debug: a
-             ,errorLog: g
-             ,photoName: e
-             ,photos: f
-             ,windowHeight: d
-             ,windowWidth: c};
-   });
+         function ($) {
+            return sendResponse(Error($Basics.toString($)));
+         });
+      });
+      var huePrefix = function (token) {
+         return $String.concat(_L.fromArray(["http://philips-hue/api/"
+                                            ,token
+                                            ,"/lights/"]));
+      };
+      var localServer = "http://localhost:3000/";
+      var simple = F3(function (command,
+      parameter,
+      argument) {
+         return get($String.concat(_L.fromArray([localServer
+                                                ,command
+                                                ,"?"
+                                                ,encodeQuery(_L.fromArray([{ctor: "_Tuple2"
+                                                                           ,_0: parameter
+                                                                           ,_1: argument}]))])));
+      });
+      return A2($Signal.map,
+      function (request) {
+         return function () {
+            switch (request.ctor)
+            {case "BlinkLight":
+               return !_U.eq(request._0,
+                 "") ? put($String.concat(_L.fromArray([huePrefix(request._0)
+                                                       ,request._1
+                                                       ,"/state"])))($Http.string(encodeQuery(_L.fromArray([{ctor: "_Tuple2"
+                                                                                                            ,_0: "alert"
+                                                                                                            ,_1: "select"}])))) : $Task.succeed({ctor: "_Tuple0"});
+               case "GetConfig":
+               return A3(simple,
+                 "get-configuration",
+                 "none",
+                 "none")(A2($Json$Decode.object1,
+                 function ($) {
+                    return SetConfig(function (token) {
+                       return {_: {}
+                              ,hueToken: token};
+                    }($));
+                 },
+                 A2($Json$Decode._op[":="],
+                 "hueToken",
+                 $Json$Decode.string)));
+               case "GetLightsList":
+               return !_U.eq(request._0,
+                 "") ? get(huePrefix(request._0))(A2($Json$Decode.object1,
+                 function ($) {
+                    return SetLightsList($List.sortBy(function ($) {
+                       return $String.toUpper(function (_) {
+                          return _.name;
+                       }($));
+                    })($List.map(function (_v69) {
+                       return function () {
+                          switch (_v69.ctor)
+                          {case "_Tuple2":
+                             return _U.insert("key",
+                               _v69._0,
+                               _v69._1);}
+                          _U.badCase($moduleName,
+                          "on line 253, column 37 to 55");
+                       }();
+                    })($)));
+                 },
+                 $Json$Decode.keyValuePairs(A4($Json$Decode.object3,
+                 F3(function (name,
+                 on,
+                 reachable) {
+                    return {_: {}
+                           ,name: name
+                           ,on: on
+                           ,reachable: reachable};
+                 }),
+                 A2($Json$Decode._op[":="],
+                 "name",
+                 $Json$Decode.string),
+                 A2($Json$Decode.at,
+                 _L.fromArray(["state","on"]),
+                 $Json$Decode.bool),
+                 A2($Json$Decode.at,
+                 _L.fromArray(["state"
+                              ,"reachable"]),
+                 $Json$Decode.bool))))) : sendResponse(Error("no hue token"));
+               case "GetPhotosList":
+               return A3(simple,
+                 "list-folder",
+                 "folder",
+                 "/home/pi/Pictures")($Json$Decode.object1(function ($) {
+                    return SetPhotosList($List.sortBy(function (_) {
+                       return _.modTime;
+                    })($));
+                 })($Json$Decode.list(A3($Json$Decode.tuple2,
+                 F2(function (path,modTime) {
+                    return {_: {}
+                           ,key: path
+                           ,modTime: modTime};
+                 }),
+                 $Json$Decode.string,
+                 $Json$Decode.$float))));
+               case "LogMessage":
+               return A4(simple,
+                 "log-message",
+                 "message",
+                 request._0,
+                 requestDone);
+               case "NoRequest":
+               return $Task.succeed({ctor: "_Tuple0"});
+               case "SendKey":
+               return A4(simple,
+                 "send-key",
+                 "key",
+                 request._0,
+                 requestDone);}
+            _U.badCase($moduleName,
+            "between lines 237 and 267");
+         }();
+      },
+      A3($Signal.filterMap,
+      function (model) {
+         return function () {
+            var _v73 = model.requestQueue;
+            switch (_v73.ctor)
+            {case "::":
+               return $Maybe.Just(_v73._0);
+               case "[]":
+               return $Maybe.Nothing;}
+            _U.badCase($moduleName,
+            "between lines 269 and 271");
+         }();
+      },
+      NoRequest,
+      modelSignal));
+   }());
+   var main = A2($Signal._op["~"],
+   A2($Signal._op["<~"],
+   view(A2($Signal.forwardTo,
+   viewMailbox.address,
+   $Maybe.Just)),
+   modelSignal),
+   $Window.dimensions);
    _elm.Main.values = {_op: _op
-                      ,Model: Model
+                      ,KeyedChannel: KeyedChannel
+                      ,PhotoBaseRecord: PhotoBaseRecord
+                      ,LightBaseRecord: LightBaseRecord
+                      ,Guide: Guide
+                      ,Photos: Photos
+                      ,Lights: Lights
+                      ,Forward: Forward
+                      ,Backward: Backward
+                      ,Rewind: Rewind
+                      ,Stay: Stay
+                      ,RequestDone: RequestDone
+                      ,SetConfig: SetConfig
                       ,Clock: Clock
                       ,KeyPressed: KeyPressed
-                      ,SetWindowSize: SetWindowSize
                       ,SetPhotosList: SetPhotosList
-                      ,Errored: Errored
-                      ,maybeFirst: maybeFirst
-                      ,following: following
-                      ,maybeNextEntry: maybeNextEntry
-                      ,main: main
-                      ,isClockTime: isClockTime
-                      ,isPhotoTime: isPhotoTime
-                      ,isShortTime: isShortTime
+                      ,SetLightsList: SetLightsList
+                      ,Error: Error
+                      ,NoRequest: NoRequest
+                      ,LogMessage: LogMessage
+                      ,GetConfig: GetConfig
+                      ,GetPhotosList: GetPhotosList
+                      ,GetLightsList: GetLightsList
+                      ,SendKey: SendKey
+                      ,BlinkLight: BlinkLight
+                      ,fadeTime: fadeTime
+                      ,isEvery: isEvery
+                      ,isPollTime: isPollTime
+                      ,isShowClockTime: isShowClockTime
+                      ,isAdvancePhotoTime: isAdvancePhotoTime
                       ,view: view
+                      ,updateRecords: updateRecords
+                      ,moveKey: moveKey
                       ,update: update
-                      ,App: App
+                      ,quote: quote
+                      ,encodeQuery: encodeQuery
+                      ,responseMailbox: responseMailbox
+                      ,emptyChannel: emptyChannel
+                      ,channel: channel
+                      ,main: main
                       ,viewMailbox: viewMailbox
-                      ,viewMailboxAddress: viewMailboxAddress
-                      ,pollingResults: pollingResults
-                      ,sendPolling: sendPolling
-                      ,sendPhotos: sendPhotos
-                      ,sendError: sendError
-                      ,start: start};
+                      ,modelSignal: modelSignal};
    return _elm.Main.values;
 };Elm.Maybe = Elm.Maybe || {};
 Elm.Maybe.make = function (_elm) {
@@ -4429,7 +4779,7 @@ Elm.Maybe.make = function (_elm) {
             case "Nothing":
             return $default;}
          _U.badCase($moduleName,
-         "between lines 45 and 56");
+         "between lines 45 and 47");
       }();
    });
    var Nothing = {ctor: "Nothing"};
@@ -4442,11 +4792,11 @@ Elm.Maybe.make = function (_elm) {
                     case "Nothing":
                     return oneOf(maybes._1);}
                  _U.badCase($moduleName,
-                 "between lines 64 and 73");
+                 "between lines 64 and 66");
               }();
             case "[]": return Nothing;}
          _U.badCase($moduleName,
-         "between lines 59 and 73");
+         "between lines 59 and 66");
       }();
    };
    var andThen = F2(function (maybeValue,
@@ -4471,7 +4821,7 @@ Elm.Maybe.make = function (_elm) {
             return Just(f(maybe._0));
             case "Nothing": return Nothing;}
          _U.badCase($moduleName,
-         "between lines 76 and 107");
+         "between lines 76 and 78");
       }();
    });
    _elm.Maybe.values = {_op: _op
@@ -4482,6 +4832,152 @@ Elm.Maybe.make = function (_elm) {
                        ,Just: Just
                        ,Nothing: Nothing};
    return _elm.Maybe.values;
+};Elm.Module = Elm.Module || {};
+Elm.Module.make = function (_elm) {
+   "use strict";
+   _elm.Module = _elm.Module || {};
+   if (_elm.Module.values)
+   return _elm.Module.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   $moduleName = "Module",
+   $Basics = Elm.Basics.make(_elm),
+   $Date = Elm.Date.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Result = Elm.Result.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $Time = Elm.Time.make(_elm);
+   var shortTime = function (date) {
+      return function () {
+         var amPm = _U.cmp($Date.hour(date),
+         12) < 0 ? "AM" : "PM";
+         var minute00 = function () {
+            var m = $Date.minute(date);
+            return A2($Basics._op["++"],
+            _U.cmp(m,10) < 0 ? "0" : "",
+            $Basics.toString(m));
+         }();
+         var hour12 = function () {
+            var h = A2($Basics.rem,
+            $Date.hour(date),
+            12);
+            return _U.eq(h,0) ? 12 : h;
+         }();
+         return A2($Basics._op["++"],
+         $Basics.toString(hour12),
+         A2($Basics._op["++"],
+         ":",
+         A2($Basics._op["++"],
+         minute00,
+         A2($Basics._op["++"],
+         " ",
+         amPm))));
+      }();
+   };
+   var dayWithSuffix = function (date) {
+      return function () {
+         var dayNumber = $Date.day(date);
+         var suffix = _U.eq(dayNumber,
+         1) || (_U.eq(dayNumber,
+         21) || _U.eq(dayNumber,
+         31)) ? "st" : _U.eq(dayNumber,
+         2) || _U.eq(dayNumber,
+         22) ? "nd" : _U.eq(dayNumber,
+         3) || _U.eq(dayNumber,
+         23) ? "rd" : "th";
+         return A2($Basics._op["++"],
+         $Basics.toString(dayNumber),
+         suffix);
+      }();
+   };
+   var monthName = function (date) {
+      return function () {
+         var _v0 = $Date.month(date);
+         switch (_v0.ctor)
+         {case "Apr": return "April";
+            case "Aug": return "August";
+            case "Dec": return "December";
+            case "Feb": return "February";
+            case "Jan": return "January";
+            case "Jul": return "July";
+            case "Jun": return "June";
+            case "Mar": return "March";
+            case "May": return "May";
+            case "Nov": return "November";
+            case "Oct": return "October";
+            case "Sep": return "September";}
+         _U.badCase($moduleName,
+         "between lines 30 and 42");
+      }();
+   };
+   var dayName = function (date) {
+      return function () {
+         var _v1 = $Date.dayOfWeek(date);
+         switch (_v1.ctor)
+         {case "Fri": return "Friday";
+            case "Mon": return "Monday";
+            case "Sat": return "Saturday";
+            case "Sun": return "Sunday";
+            case "Thu": return "Thursday";
+            case "Tue": return "Tuesday";
+            case "Wed": return "Wednesday";}
+         _U.badCase($moduleName,
+         "between lines 21 and 28");
+      }();
+   };
+   var timeSinceMinute = function (date) {
+      return function () {
+         var t = $Date.toTime(date);
+         return F2(function (x,y) {
+            return x - y;
+         })(t)(F2(function (x,y) {
+            return x * y;
+         })($Time.minute)($Basics.toFloat($Basics.floor($Time.inMinutes(t)))));
+      }();
+   };
+   var appendIf = F3(function (b,
+   list,
+   newTail) {
+      return A2($Basics._op["++"],
+      list,
+      b ? newTail : _L.fromArray([]));
+   });
+   var nextEntry = F3(function ($default,
+   list,
+   entry) {
+      return function () {
+         var first = A2($Maybe.withDefault,
+         $default,
+         $List.head(list));
+         var nextEntry$ = function (entries) {
+            return function () {
+               switch (entries.ctor)
+               {case "::":
+                  switch (entries._1.ctor)
+                    {case "::":
+                       return _U.eq(entries._0,
+                         entry) ? entries._1._0 : nextEntry$(A2($List._op["::"],
+                         entries._1._0,
+                         entries._1._1));}
+                    break;}
+               return first;
+            }();
+         };
+         return nextEntry$(list);
+      }();
+   });
+   _elm.Module.values = {_op: _op
+                        ,appendIf: appendIf
+                        ,dayName: dayName
+                        ,dayWithSuffix: dayWithSuffix
+                        ,monthName: monthName
+                        ,nextEntry: nextEntry
+                        ,shortTime: shortTime
+                        ,timeSinceMinute: timeSinceMinute};
+   return _elm.Module.values;
 };Elm.Native.Array = {};
 Elm.Native.Array.make = function(localRuntime) {
 
@@ -13018,7 +13514,7 @@ Elm.Result.make = function (_elm) {
             case "Ok":
             return $Maybe.Just(result._0);}
          _U.badCase($moduleName,
-         "between lines 164 and 177");
+         "between lines 164 and 166");
       }();
    };
    var Err = function (a) {
@@ -13033,7 +13529,7 @@ Elm.Result.make = function (_elm) {
             case "Ok":
             return callback(result._0);}
          _U.badCase($moduleName,
-         "between lines 126 and 145");
+         "between lines 126 and 128");
       }();
    });
    var Ok = function (a) {
@@ -13047,7 +13543,7 @@ Elm.Result.make = function (_elm) {
             case "Ok":
             return Ok(func(ra._0));}
          _U.badCase($moduleName,
-         "between lines 41 and 52");
+         "between lines 41 and 43");
       }();
    });
    var map2 = F3(function (func,
@@ -13201,7 +13697,7 @@ Elm.Result.make = function (_elm) {
                  return Err(_v39._4._0);}
               break;}
          _U.badCase($moduleName,
-         "between lines 82 and 123");
+         "between lines 82 and 88");
       }();
    });
    var formatError = F2(function (f,
@@ -13213,7 +13709,7 @@ Elm.Result.make = function (_elm) {
             case "Ok":
             return Ok(result._0);}
          _U.badCase($moduleName,
-         "between lines 148 and 161");
+         "between lines 148 and 150");
       }();
    });
    var fromMaybe = F2(function (err,
@@ -13447,7 +13943,7 @@ Elm.Signal.make = function (_elm) {
             case "[]":
             return $Debug.crash("mergeMany was given an empty list!");}
          _U.badCase($moduleName,
-         "between lines 177 and 197");
+         "between lines 177 and 182");
       }();
    };
    var foldp = $Native$Signal.foldp;
@@ -14050,9 +14546,13 @@ Elm.VirtualDom.make = function (_elm) {
    _U = _N.Utils.make(_elm),
    _L = _N.List.make(_elm),
    $moduleName = "VirtualDom",
+   $Basics = Elm.Basics.make(_elm),
    $Graphics$Element = Elm.Graphics.Element.make(_elm),
    $Json$Decode = Elm.Json.Decode.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
    $Native$VirtualDom = Elm.Native.VirtualDom.make(_elm),
+   $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm);
    var lazy3 = $Native$VirtualDom.lazy3;
    var lazy2 = $Native$VirtualDom.lazy2;
