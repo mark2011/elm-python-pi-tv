@@ -20,9 +20,9 @@ while True:
     elif cec_line.find ("key pressed: right") != -1:
        send_key (cec_line, 'l')
     elif cec_line.find ("key pressed: up") != -1:
-       send_key (cec_line, 'j')
-    elif cec_line.find ("key pressed: down") != -1:
        send_key (cec_line, 'k')
+    elif cec_line.find ("key pressed: down") != -1:
+       send_key (cec_line, 'j')
     elif cec_line.find ("key pressed: rewind") != -1:
        send_key (cec_line, '0')
     elif cec_line.find ("key pressed") != -1:
