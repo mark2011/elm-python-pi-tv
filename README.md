@@ -1,7 +1,12 @@
 # elm-python-pi-tv
 home photo show, info center and automation - exploits elm language, python, raspberry pi, hdmi/cec tv, web apis
 
-- photo show
+- initial menu of channels
+  - remote control
+    - up/down - select channel
+    - ok - go to selected channel
+    - exit - (in channel) - return to channel menu
+- photo show channel
   - next photo every 15 seconds
   - display small clock overlay for first 10 seconds of every minute
   - remote control buttons
@@ -10,15 +15,15 @@ home photo show, info center and automation - exploits elm language, python, ras
     - rewind - go to the first photo
   - full clock display every 5 minutes
 
-- Philips Hue control
-  - api token is in configuration file /home/pi/elm-python-pi-tv.json
+- Philips Hue control channel
+  - api token is in configuration file /home/pi/.config/elm-python-pi-tv.json
     - file format: {"hueToken" : "TOKEN"}
   - list of lights
     - red - light is not powered
     - blue - light is not on
     - white light is illuminated
   - remote control buttons
-    - left/right to move from light to light
+    - up/down to move from light to light
     - ok - blink selected light
 
 A python script (run.py) launches chromium with the html file (elm-python-pi-tv.html) that is compiled from the elm file (elm-python-pi.tv.elm).
