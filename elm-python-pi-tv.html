@@ -3979,7 +3979,7 @@ Elm.Main.make = function (_elm) {
                       ,_0: _v0._0
                       ,_1: $Json$Encode.string(_v0._1)};}
             _U.badCase($moduleName,
-            "on line 206, column 58 to 71");
+            "on line 204, column 58 to 71");
          }();
       })($)));
    };
@@ -4036,12 +4036,6 @@ Elm.Main.make = function (_elm) {
    m) {
       return _U.replace([["config"
                          ,f(m.config)]],
-      m);
-   });
-   var updateDebug = F2(function (f,
-   m) {
-      return _U.replace([["debug"
-                         ,f(m.debug)]],
       m);
    });
    var updateDisplayClock = F2(function (f,
@@ -4408,9 +4402,7 @@ Elm.Main.make = function (_elm) {
                case "KeyboardPressed":
                return function () {
                     switch (action._0 + "")
-                    {case "d":
-                       return updateDebug($Basics.not);
-                       case "e":
+                    {case "e":
                        return updateChannel($Basics.always(Guide));}
                     return function () {
                        var _v46 = model.channel;
@@ -4454,7 +4446,7 @@ Elm.Main.make = function (_elm) {
                                return Stay;
                             }()));}
                        _U.badCase($moduleName,
-                       "between lines 184 and 203");
+                       "between lines 182 and 201");
                     }();
                  }();
                case "RequestDone":
@@ -4468,7 +4460,7 @@ Elm.Main.make = function (_elm) {
                case "SetPhotoItems":
                return updatePhotos(updateItems(action._0));}
             _U.badCase($moduleName,
-            "between lines 169 and 203");
+            "between lines 168 and 201");
          }()(model);
       }(updateRequestQueue(function ($) {
          return A2($Basics.flip,
@@ -4486,18 +4478,16 @@ Elm.Main.make = function (_elm) {
               _v52._0,
               model);}
          _U.badCase($moduleName,
-         "on line 273, column 30 to 49");
+         "on line 271, column 30 to 49");
       }();
    }),
    {_: {}
    ,channel: Guide
    ,config: {_: {},hueToken: ""}
    ,date: $Date.fromTime(0)
-   ,debug: false
    ,guide: channel(_L.fromArray([Photos
                                 ,Lights]))
    ,lights: emptyChannel
-   ,log: _L.fromArray([])
    ,photos: _U.insert("displayClock",
    false,
    emptyChannel)
@@ -4615,7 +4605,7 @@ Elm.Main.make = function (_elm) {
                                _v65._0,
                                _v65._1);}
                           _U.badCase($moduleName,
-                          "on line 243, column 37 to 55");
+                          "on line 241, column 37 to 55");
                        }();
                     })($)));
                  },
@@ -4669,7 +4659,7 @@ Elm.Main.make = function (_elm) {
                  request._0,
                  requestDone);}
             _U.badCase($moduleName,
-            "between lines 227 and 257");
+            "between lines 225 and 255");
          }();
       },
       A3($Signal.filterMap,
@@ -4682,7 +4672,7 @@ Elm.Main.make = function (_elm) {
                case "[]":
                return $Maybe.Nothing;}
             _U.badCase($moduleName,
-            "between lines 259 and 261");
+            "between lines 257 and 259");
          }();
       },
       NoRequest,
@@ -4729,7 +4719,6 @@ Elm.Main.make = function (_elm) {
                       ,updateItems: updateItems
                       ,moveKey: moveKey
                       ,updateDisplayClock: updateDisplayClock
-                      ,updateDebug: updateDebug
                       ,updateConfig: updateConfig
                       ,updateChannel: updateChannel
                       ,updateRequestQueue: updateRequestQueue

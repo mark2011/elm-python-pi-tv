@@ -153,7 +153,6 @@ moveKey direction keyedChannel =
         [] -> Nothing}
 
 updateDisplayClock f p = {p | displayClock <- f p.displayClock}
-updateDebug f m = {m | debug <- f m.debug}
 updateConfig f m = {m | config <- f m.config}
 updateChannel f m = {m | channel <- f m.channel}
 updateRequestQueue f m = {m | requestQueue <- f m.requestQueue}
@@ -179,7 +178,6 @@ update action rawModel =
         >> (if not (isPollTime date) then identity else
              (addRequest GetPhotoItems >> addRequest (GetLightItems model.config.hueToken)))
       KeyboardPressed press -> case press of
-        'd' -> updateDebug not
         'e' -> always Guide |> updateChannel
         _ -> case model.channel of
           Guide -> case press of
@@ -271,10 +269,8 @@ viewMailbox = Signal.mailbox Nothing
 modelSignal =
   Signal.foldp
     (\(Just action) model -> update action model)
-    {debug = False,
-     requestQueue = [GetConfig, PressKeyboard "F11", GetPhotoItems],
+    {requestQueue = [GetConfig, PressKeyboard "F11", GetPhotoItems],
      date = fromTime 0,
-     log = [],
      config = {hueToken = ""},
      channel = Guide,
      guide = channel [Photos, Lights],
