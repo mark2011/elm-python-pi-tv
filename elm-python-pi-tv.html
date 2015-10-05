@@ -3967,8 +3967,8 @@ Elm.Main.make = function (_elm) {
    $Window = Elm.Window.make(_elm);
    var viewMailbox = $Signal.mailbox($Maybe.Nothing);
    var emptyChannel = {_: {}
-                      ,maybeKey: $Maybe.Nothing
-                      ,records: _L.fromArray([])};
+                      ,items: _L.fromArray([])
+                      ,selectedItemKey: $Maybe.Nothing};
    var responseMailbox = $Signal.mailbox($Maybe.Nothing);
    var encodeQuery = function ($) {
       return $Json$Encode.encode(0)($Json$Encode.object($List.map(function (_v0) {
@@ -3979,7 +3979,7 @@ Elm.Main.make = function (_elm) {
                       ,_0: _v0._0
                       ,_1: $Json$Encode.string(_v0._1)};}
             _U.badCase($moduleName,
-            "on line 216, column 58 to 71");
+            "on line 206, column 58 to 71");
          }();
       })($)));
    };
@@ -3988,17 +3988,79 @@ Elm.Main.make = function (_elm) {
       "\"",
       A2($Basics._op["++"],s,"\""));
    };
-   var moveKey = F2(function (keyedChannel,
-   direction) {
+   var addRequest = F2(function (request,
+   m) {
+      return _U.replace([["requestQueue"
+                         ,A2($Basics._op["++"],
+                         m.requestQueue,
+                         _L.fromArray([request]))]],
+      m);
+   });
+   var updateLights = F2(function (f,
+   m) {
+      return _U.replace([["lights"
+                         ,f(m.lights)]],
+      m);
+   });
+   var updatePhotos = F2(function (f,
+   m) {
+      return _U.replace([["photos"
+                         ,f(m.photos)]],
+      m);
+   });
+   var updateGuide = F2(function (f,
+   m) {
+      return _U.replace([["guide"
+                         ,f(m.guide)]],
+      m);
+   });
+   var updateDate = F2(function (f,
+   m) {
+      return _U.replace([["date"
+                         ,f(m.date)]],
+      m);
+   });
+   var updateRequestQueue = F2(function (f,
+   m) {
+      return _U.replace([["requestQueue"
+                         ,f(m.requestQueue)]],
+      m);
+   });
+   var updateChannel = F2(function (f,
+   m) {
+      return _U.replace([["channel"
+                         ,f(m.channel)]],
+      m);
+   });
+   var updateConfig = F2(function (f,
+   m) {
+      return _U.replace([["config"
+                         ,f(m.config)]],
+      m);
+   });
+   var updateDebug = F2(function (f,
+   m) {
+      return _U.replace([["debug"
+                         ,f(m.debug)]],
+      m);
+   });
+   var updateDisplayClock = F2(function (f,
+   p) {
+      return _U.replace([["displayClock"
+                         ,f(p.displayClock)]],
+      p);
+   });
+   var moveKey = F2(function (direction,
+   keyedChannel) {
       return function () {
          var maybeNextKey = F2(function (channel,
          g) {
             return function () {
                var _v4 = {ctor: "_Tuple2"
-                         ,_0: channel.maybeKey
+                         ,_0: channel.selectedItemKey
                          ,_1: $List.map(function (_) {
                             return _.key;
-                         })(g(channel.records))};
+                         })(g(channel.items))};
                switch (_v4.ctor)
                {case "_Tuple2":
                   switch (_v4._1.ctor)
@@ -4020,10 +4082,10 @@ Elm.Main.make = function (_elm) {
                          break;}
                     break;}
                _U.badCase($moduleName,
-               "between lines 143 and 147");
+               "between lines 142 and 146");
             }();
          });
-         return _U.replace([["maybeKey"
+         return _U.replace([["selectedItemKey"
                             ,function () {
                                switch (direction.ctor)
                                {case "Backward":
@@ -4036,31 +4098,31 @@ Elm.Main.make = function (_elm) {
                                     $Basics.identity);
                                   case "Rewind":
                                   return function () {
-                                       var _v13 = keyedChannel.records;
+                                       var _v13 = keyedChannel.items;
                                        switch (_v13.ctor)
                                        {case "::":
                                           return $Maybe.Just(_v13._0.key);
                                           case "[]":
                                           return $Maybe.Nothing;}
                                        _U.badCase($moduleName,
-                                       "between lines 152 and 154");
+                                       "between lines 151 and 153");
                                     }();
                                   case "Stay":
-                                  return keyedChannel.maybeKey;}
+                                  return keyedChannel.selectedItemKey;}
                                _U.badCase($moduleName,
-                               "between lines 148 and 154");
+                               "between lines 147 and 153");
                             }()]],
          keyedChannel);
       }();
    });
-   var updateRecords = F2(function (keyedChannel,
-   newRecords) {
+   var updateItems = F2(function (newItems,
+   keyedChannel) {
       return function () {
-         var newMaybeKey = function () {
+         var newSelectedItemKey = function () {
             var _v16 = {ctor: "_Tuple3"
-                       ,_0: keyedChannel.maybeKey
-                       ,_1: keyedChannel.records
-                       ,_2: newRecords};
+                       ,_0: keyedChannel.selectedItemKey
+                       ,_1: keyedChannel.items
+                       ,_2: newItems};
             switch (_v16.ctor)
             {case "_Tuple3":
                switch (_v16._0.ctor)
@@ -4071,18 +4133,19 @@ Elm.Main.make = function (_elm) {
                       break;}
                  return _v16._0;}
             _U.badCase($moduleName,
-            "between lines 135 and 138");
+            "between lines 134 and 137");
          }();
-         return _U.replace([["records"
-                            ,newRecords]
-                           ,["maybeKey",newMaybeKey]],
+         return _U.replace([["items"
+                            ,newItems]
+                           ,["selectedItemKey"
+                            ,newSelectedItemKey]],
          keyedChannel);
       }();
    });
    var channel = function (keys) {
-      return updateRecords(emptyChannel)($List.map(function (k) {
+      return updateItems($List.map(function (k) {
          return {_: {},key: k};
-      })(keys));
+      })(keys))(emptyChannel);
    };
    var isEvery = F3(function (k,
    f,
@@ -4111,34 +4174,37 @@ Elm.Main.make = function (_elm) {
              ,_0: a
              ,_1: b};
    });
-   var SendKey = function (a) {
-      return {ctor: "SendKey"
+   var GetLightItems = function (a) {
+      return {ctor: "GetLightItems"
              ,_0: a};
    };
-   var GetLightsList = function (a) {
-      return {ctor: "GetLightsList"
+   var PressKeyboard = function (a) {
+      return {ctor: "PressKeyboard"
              ,_0: a};
    };
-   var GetPhotosList = {ctor: "GetPhotosList"};
+   var GetPhotoItems = {ctor: "GetPhotoItems"};
    var GetConfig = {ctor: "GetConfig"};
    var LogMessage = function (a) {
       return {ctor: "LogMessage"
              ,_0: a};
    };
+   var log = function ($) {
+      return addRequest(LogMessage($Basics.toString($)));
+   };
    var NoRequest = {ctor: "NoRequest"};
    var Error = function (a) {
       return {ctor: "Error",_0: a};
    };
-   var SetLightsList = function (a) {
-      return {ctor: "SetLightsList"
+   var SetLightItems = function (a) {
+      return {ctor: "SetLightItems"
              ,_0: a};
    };
-   var SetPhotosList = function (a) {
-      return {ctor: "SetPhotosList"
+   var SetPhotoItems = function (a) {
+      return {ctor: "SetPhotoItems"
              ,_0: a};
    };
-   var KeyPressed = function (a) {
-      return {ctor: "KeyPressed"
+   var KeyboardPressed = function (a) {
+      return {ctor: "KeyboardPressed"
              ,_0: a};
    };
    var Clock = function (a) {
@@ -4164,11 +4230,11 @@ Elm.Main.make = function (_elm) {
          {case "_Tuple2":
             return function () {
                  return function () {
-                    var prefix = F2(function (channel,
+                    var highlighter = F2(function (channel,
                     key) {
                        return _U.eq($Maybe.Just(key),
                        function (_) {
-                          return _.maybeKey;
+                          return _.selectedItemKey;
                        }(channel(model))) ? "*" : " ";
                     });
                     var overlayOpacity = $Basics.max(0.0)(1.0 - $Module.timeSinceMinute(model.date) / fadeTime);
@@ -4243,18 +4309,18 @@ Elm.Main.make = function (_elm) {
                                                              ,A2($Basics._op["++"],
                                                              "                        ",
                                                              $Module.shortTime(model.date))]));
-                    var screen = model.debug ? drawLines(model.log) : _U.eq(model.channel,
+                    var screen = _U.eq(model.channel,
                     Guide) ? drawLines($List.map(function (_v32) {
                        return function () {
                           return A2($Basics._op["++"],
-                          A2(prefix,
+                          A2(highlighter,
                           function (_) {
-                             return _.guideChannel;
+                             return _.guide;
                           },
                           _v32.key),
                           $Basics.toString(_v32.key));
                        }();
-                    })(model.guideChannel.records)) : _U.eq(model.channel,
+                    })(model.guide.items)) : _U.eq(model.channel,
                     Lights) ? !_U.eq(model.config.hueToken,
                     "") ? drawLines2($List.map(function (_v34) {
                        return function () {
@@ -4262,23 +4328,23 @@ Elm.Main.make = function (_elm) {
                              var color = $Basics.not(_v34.reachable) ? $Color.red : $Basics.not(_v34.on) ? $Color.blue : $Color.white;
                              return {ctor: "_Tuple2"
                                     ,_0: A2($Basics._op["++"],
-                                    A2(prefix,
+                                    A2(highlighter,
                                     function (_) {
-                                       return _.lightsChannel;
+                                       return _.lights;
                                     },
                                     _v34.key),
                                     _v34.name)
                                     ,_1: $Text.color(color)};
                           }();
                        }();
-                    })(model.lightsChannel.records)) : drawLines(_L.fromArray([""
-                                                                              ,""
-                                                                              ,""
-                                                                              ," Hue token is not configured"
-                                                                              ,""
-                                                                              ,""
-                                                                              ,""])) : model.photosChannel.displayClock ? clockText : function () {
-                       var _v36 = model.photosChannel.maybeKey;
+                    })(model.lights.items)) : drawLines(_L.fromArray([""
+                                                                     ,""
+                                                                     ,""
+                                                                     ," Hue token is not configured"
+                                                                     ,""
+                                                                     ,""
+                                                                     ,""])) : model.photos.displayClock ? clockText : function () {
+                       var _v36 = model.photos.selectedItemKey;
                        switch (_v36.ctor)
                        {case "Just":
                           return $Graphics$Element.layers(_L.fromArray([fullScreen($Graphics$Element.middle)(A3($Graphics$Element.fittedImage,
@@ -4294,16 +4360,16 @@ Elm.Main.make = function (_elm) {
                                                         ,""
                                                         ,""]));}
                        _U.badCase($moduleName,
-                       "between lines 120 and 131");
+                       "between lines 119 and 130");
                     }();
                     return $Html.fromElement($Graphics$Element.color($Color.black)(screen));
                  }();
               }();}
          _U.badCase($moduleName,
-         "between lines 60 and 132");
+         "between lines 60 and 131");
       }();
    });
-   var LightBaseRecord = F3(function (a,
+   var LightBaseItem = F3(function (a,
    b,
    c) {
       return {_: {}
@@ -4311,14 +4377,14 @@ Elm.Main.make = function (_elm) {
              ,on: b
              ,reachable: c};
    });
-   var PhotoBaseRecord = function (a) {
+   var PhotoBaseItem = function (a) {
       return {_: {},modTime: a};
    };
    var KeyedChannel = F2(function (a,
    b) {
       return {_: {}
-             ,maybeKey: a
-             ,records: b};
+             ,items: b
+             ,selectedItemKey: a};
    });
    _op["?"] = F2(function (maybe,
    $default) {
@@ -4327,188 +4393,100 @@ Elm.Main.make = function (_elm) {
       maybe);
    });
    var update = F2(function (action,
-   modelWithCompletedRequest) {
-      return function () {
-         var model1 = _U.replace([["requestQueue"
-                                  ,A2(_op["?"],
-                                  $List.tail(modelWithCompletedRequest.requestQueue),
-                                  _L.fromArray([]))]],
-         modelWithCompletedRequest);
-         var $ = function () {
-            var _v38 = {ctor: "_Tuple2"
-                       ,_0: model1.requestQueue
-                       ,_1: model1.log};
-            switch (_v38.ctor)
-            {case "_Tuple2":
-               switch (_v38._0.ctor)
-                 {case "[]":
-                    switch (_v38._1.ctor)
-                      {case "::":
-                         return {ctor: "_Tuple2"
-                                ,_0: _L.fromArray([LogMessage(_v38._1._0)])
-                                ,_1: _v38._1._1};}
-                      break;}
-                 break;}
-            return _v38;
-         }(),
-         newRequestQueue = $._0,
-         newLog = $._1;
-         var model = _U.replace([["requestQueue"
-                                 ,newRequestQueue]
-                                ,["log",newLog]],
-         model1);
-         var guideChannel = model.guideChannel;
-         var photosChannel = model.photosChannel;
-         var lightsChannel = model.lightsChannel;
-         var log = function (message) {
-            return A2($Basics._op["++"],
-            model.log,
-            _L.fromArray([$Basics.toString(message)]));
-         };
+   rawModel) {
+      return function (model) {
          return function () {
             switch (action.ctor)
             {case "Clock":
-               return function () {
-                    var moved = moveKey(photosChannel)(isAdvancePhotoTime(action._0) ? Forward : Stay);
-                    var newPhotosChannel = _U.replace([["displayClock"
-                                                       ,isShowClockTime(action._0)]],
-                    moved);
-                    return _U.replace([["date"
-                                       ,action._0]
-                                      ,["requestQueue"
-                                       ,A3($Module.appendIf,
-                                       isPollTime(action._0),
-                                       model.requestQueue,
-                                       _L.fromArray([GetPhotosList
-                                                    ,GetLightsList(model.config.hueToken)]))]
-                                      ,["photosChannel"
-                                       ,newPhotosChannel]],
-                    model);
-                 }();
+               return function ($) {
+                    return ($Basics.not(isPollTime(action._0)) ? $Basics.identity : function ($) {
+                       return addRequest(GetLightItems(model.config.hueToken))(addRequest(GetPhotoItems)($));
+                    })(updatePhotos(updateDisplayClock($Basics.always(isShowClockTime(action._0))))(updatePhotos(moveKey(isAdvancePhotoTime(action._0) ? Forward : Stay))(updateDate($Basics.always(action._0))($))));
+                 };
                case "Error":
-               return _U.replace([["log"
-                                  ,A2($Basics._op["++"],
-                                  model.log,
-                                  _L.fromArray([action._0]))]],
-                 model);
-               case "KeyPressed":
+               return log(action._0);
+               case "KeyboardPressed":
                return function () {
                     switch (action._0 + "")
                     {case "d":
-                       return _U.replace([["debug"
-                                          ,$Basics.not(model.debug)]],
-                         model);
+                       return updateDebug($Basics.not);
                        case "e":
-                       return _U.replace([["channel"
-                                          ,Guide]],
-                         model);}
+                       return updateChannel($Basics.always(Guide));}
                     return function () {
-                       var _v51 = model.channel;
-                       switch (_v51.ctor)
+                       var _v46 = model.channel;
+                       switch (_v46.ctor)
                        {case "Guide":
                           return function () {
-                               var f = function (direction) {
-                                  return _U.replace([["guideChannel"
-                                                     ,A2(moveKey,
-                                                     guideChannel,
-                                                     direction)]],
-                                  model);
-                               };
-                               return function () {
+                               switch (action._0 + "")
+                               {case "y":
+                                  return updateChannel($Basics.always(A2(_op["?"],
+                                    model.guide.selectedItemKey,
+                                    Guide)));}
+                               return updateGuide(moveKey(function () {
                                   switch (action._0 + "")
-                                  {case "j": return f(Forward);
-                                     case "k": return f(Backward);
-                                     case "y":
-                                     return _U.replace([["channel"
-                                                        ,A2(_op["?"],
-                                                        guideChannel.maybeKey,
-                                                        Guide)]],
-                                       model);}
-                                  return model;
-                               }();
+                                  {case "0": return Rewind;
+                                     case "j": return Forward;
+                                     case "k": return Backward;}
+                                  return Stay;
+                               }()));
                             }();
                           case "Lights":
                           return function () {
                                switch (action._0 + "")
                                {case "y":
-                                  return _U.replace([["requestQueue"
-                                                     ,A2($Basics._op["++"],
-                                                     model.requestQueue,
-                                                     _L.fromArray([BlinkLight(model.config.hueToken)(A2(_op["?"],
-                                                     lightsChannel.maybeKey,
-                                                     ""))]))]],
-                                    model);}
-                               return function () {
-                                  var f = function (direction) {
-                                     return _U.replace([["lightsChannel"
-                                                        ,A2(moveKey,
-                                                        lightsChannel,
-                                                        direction)]],
-                                     model);
-                                  };
-                                  return function () {
-                                     switch (action._0 + "")
-                                     {case "0": return f(Rewind);
-                                        case "j": return f(Forward);
-                                        case "k": return f(Backward);}
-                                     return model;
-                                  }();
-                               }();
+                                  return addRequest(BlinkLight(model.config.hueToken)(A2(_op["?"],
+                                    model.lights.selectedItemKey,
+                                    "")));}
+                               return updateLights(moveKey(function () {
+                                  switch (action._0 + "")
+                                  {case "0": return Rewind;
+                                     case "j": return Forward;
+                                     case "k": return Backward;}
+                                  return Stay;
+                               }()));
                             }();
                           case "Photos":
-                          return function () {
-                               var f = function (direction) {
-                                  return _U.replace([["photosChannel"
-                                                     ,A2(moveKey,
-                                                     photosChannel,
-                                                     direction)]],
-                                  model);
-                               };
-                               return function () {
-                                  switch (action._0 + "")
-                                  {case "0": return f(Rewind);
-                                     case "h": return f(Backward);
-                                     case "l": return f(Forward);}
-                                  return model;
-                               }();
-                            }();}
+                          return updatePhotos(moveKey(function () {
+                               switch (action._0 + "")
+                               {case "0": return Rewind;
+                                  case "h": return Backward;
+                                  case "l": return Forward;}
+                               return Stay;
+                            }()));}
                        _U.badCase($moduleName,
-                       "between lines 189 and 213");
+                       "between lines 184 and 203");
                     }();
                  }();
                case "RequestDone":
-               return model;
+               return $Basics.identity;
                case "SetConfig":
-               return _U.replace([["config"
-                                  ,action._0]
-                                 ,["log",log(action._0)]],
-                 model);
-               case "SetLightsList":
-               return _U.replace([["lightsChannel"
-                                  ,A2(updateRecords,
-                                  lightsChannel,
-                                  action._0)]],
-                 model);
-               case "SetPhotosList":
-               return _U.replace([["photosChannel"
-                                  ,A2(updateRecords,
-                                  photosChannel,
-                                  action._0)]],
-                 model);}
+               return function ($) {
+                    return log(action._0)(updateConfig($Basics.always(action._0))($));
+                 };
+               case "SetLightItems":
+               return updateLights(updateItems(action._0));
+               case "SetPhotoItems":
+               return updatePhotos(updateItems(action._0));}
             _U.badCase($moduleName,
-            "between lines 168 and 213");
-         }();
-      }();
+            "between lines 169 and 203");
+         }()(model);
+      }(updateRequestQueue(function ($) {
+         return A2($Basics.flip,
+         F2(function (x,y) {
+            return A2(_op["?"],x,y);
+         }),
+         _L.fromArray([]))($List.tail($));
+      })(rawModel));
    });
    var modelSignal = A3($Signal.foldp,
-   F2(function (_v56,model) {
+   F2(function (_v52,model) {
       return function () {
-         switch (_v56.ctor)
+         switch (_v52.ctor)
          {case "Just": return A2(update,
-              _v56._0,
+              _v52._0,
               model);}
          _U.badCase($moduleName,
-         "on line 283, column 30 to 49");
+         "on line 273, column 30 to 49");
       }();
    }),
    {_: {}
@@ -4516,16 +4494,16 @@ Elm.Main.make = function (_elm) {
    ,config: {_: {},hueToken: ""}
    ,date: $Date.fromTime(0)
    ,debug: false
-   ,guideChannel: channel(_L.fromArray([Photos
-                                       ,Lights]))
-   ,lightsChannel: emptyChannel
+   ,guide: channel(_L.fromArray([Photos
+                                ,Lights]))
+   ,lights: emptyChannel
    ,log: _L.fromArray([])
-   ,photosChannel: _U.insert("displayClock",
+   ,photos: _U.insert("displayClock",
    false,
    emptyChannel)
    ,requestQueue: _L.fromArray([GetConfig
-                               ,SendKey("F11")
-                               ,GetPhotosList])},
+                               ,PressKeyboard("F11")
+                               ,GetPhotoItems])},
    $Signal.mergeMany(_L.fromArray([viewMailbox.signal
                                   ,responseMailbox.signal
                                   ,A2($Signal.map,
@@ -4535,12 +4513,12 @@ Elm.Main.make = function (_elm) {
                                   $Time.every($Time.second))
                                   ,A2($Signal.map,
                                   function ($) {
-                                     return $Maybe.Just(KeyPressed($Char.fromCode($)));
+                                     return $Maybe.Just(KeyboardPressed($Char.fromCode($)));
                                   },
                                   $Keyboard.presses)])));
    var requestPort = Elm.Native.Task.make(_elm).performSignal("requestPort",
    function () {
-      var requestDone = $Json$Decode.object1(function (_v59) {
+      var requestDone = $Json$Decode.object1(function (_v55) {
          return function () {
             return RequestDone;
          }();
@@ -4571,7 +4549,7 @@ Elm.Main.make = function (_elm) {
          ,headers: _L.fromArray([])
          ,url: endPoint
          ,verb: "PUT"}),
-         function (_v61) {
+         function (_v57) {
             return function () {
                return sendResponse(RequestDone);
             }();
@@ -4580,7 +4558,7 @@ Elm.Main.make = function (_elm) {
             return sendResponse(Error($Basics.toString($)));
          });
       });
-      var huePrefix = function (token) {
+      var hueUrl = function (token) {
          return $String.concat(_L.fromArray(["http://philips-hue/api/"
                                             ,token
                                             ,"/lights/"]));
@@ -4602,7 +4580,7 @@ Elm.Main.make = function (_elm) {
             switch (request.ctor)
             {case "BlinkLight":
                return !_U.eq(request._0,
-                 "") ? put($String.concat(_L.fromArray([huePrefix(request._0)
+                 "") ? put($String.concat(_L.fromArray([hueUrl(request._0)
                                                        ,request._1
                                                        ,"/state"])))($Http.string(encodeQuery(_L.fromArray([{ctor: "_Tuple2"
                                                                                                             ,_0: "alert"
@@ -4621,23 +4599,23 @@ Elm.Main.make = function (_elm) {
                  A2($Json$Decode._op[":="],
                  "hueToken",
                  $Json$Decode.string)));
-               case "GetLightsList":
+               case "GetLightItems":
                return !_U.eq(request._0,
-                 "") ? get(huePrefix(request._0))(A2($Json$Decode.object1,
+                 "") ? get(hueUrl(request._0))(A2($Json$Decode.object1,
                  function ($) {
-                    return SetLightsList($List.sortBy(function ($) {
+                    return SetLightItems($List.sortBy(function ($) {
                        return $String.toUpper(function (_) {
                           return _.name;
                        }($));
-                    })($List.map(function (_v69) {
+                    })($List.map(function (_v65) {
                        return function () {
-                          switch (_v69.ctor)
+                          switch (_v65.ctor)
                           {case "_Tuple2":
                              return _U.insert("key",
-                               _v69._0,
-                               _v69._1);}
+                               _v65._0,
+                               _v65._1);}
                           _U.badCase($moduleName,
-                          "on line 253, column 37 to 55");
+                          "on line 243, column 37 to 55");
                        }();
                     })($)));
                  },
@@ -4660,12 +4638,12 @@ Elm.Main.make = function (_elm) {
                  _L.fromArray(["state"
                               ,"reachable"]),
                  $Json$Decode.bool))))) : sendResponse(Error("no hue token"));
-               case "GetPhotosList":
+               case "GetPhotoItems":
                return A3(simple,
                  "list-folder",
                  "folder",
                  "/home/pi/Pictures")($Json$Decode.object1(function ($) {
-                    return SetPhotosList($List.sortBy(function (_) {
+                    return SetPhotoItems($List.sortBy(function (_) {
                        return _.modTime;
                     })($));
                  })($Json$Decode.list(A3($Json$Decode.tuple2,
@@ -4684,27 +4662,27 @@ Elm.Main.make = function (_elm) {
                  requestDone);
                case "NoRequest":
                return $Task.succeed({ctor: "_Tuple0"});
-               case "SendKey":
+               case "PressKeyboard":
                return A4(simple,
-                 "send-key",
-                 "key",
+                 "press-keyboard",
+                 "press",
                  request._0,
                  requestDone);}
             _U.badCase($moduleName,
-            "between lines 237 and 267");
+            "between lines 227 and 257");
          }();
       },
       A3($Signal.filterMap,
       function (model) {
          return function () {
-            var _v73 = model.requestQueue;
-            switch (_v73.ctor)
+            var _v69 = model.requestQueue;
+            switch (_v69.ctor)
             {case "::":
-               return $Maybe.Just(_v73._0);
+               return $Maybe.Just(_v69._0);
                case "[]":
                return $Maybe.Nothing;}
             _U.badCase($moduleName,
-            "between lines 269 and 271");
+            "between lines 259 and 261");
          }();
       },
       NoRequest,
@@ -4719,8 +4697,8 @@ Elm.Main.make = function (_elm) {
    $Window.dimensions);
    _elm.Main.values = {_op: _op
                       ,KeyedChannel: KeyedChannel
-                      ,PhotoBaseRecord: PhotoBaseRecord
-                      ,LightBaseRecord: LightBaseRecord
+                      ,PhotoBaseItem: PhotoBaseItem
+                      ,LightBaseItem: LightBaseItem
                       ,Guide: Guide
                       ,Photos: Photos
                       ,Lights: Lights
@@ -4731,16 +4709,16 @@ Elm.Main.make = function (_elm) {
                       ,RequestDone: RequestDone
                       ,SetConfig: SetConfig
                       ,Clock: Clock
-                      ,KeyPressed: KeyPressed
-                      ,SetPhotosList: SetPhotosList
-                      ,SetLightsList: SetLightsList
+                      ,KeyboardPressed: KeyboardPressed
+                      ,SetPhotoItems: SetPhotoItems
+                      ,SetLightItems: SetLightItems
                       ,Error: Error
                       ,NoRequest: NoRequest
                       ,LogMessage: LogMessage
                       ,GetConfig: GetConfig
-                      ,GetPhotosList: GetPhotosList
-                      ,GetLightsList: GetLightsList
-                      ,SendKey: SendKey
+                      ,GetPhotoItems: GetPhotoItems
+                      ,PressKeyboard: PressKeyboard
+                      ,GetLightItems: GetLightItems
                       ,BlinkLight: BlinkLight
                       ,fadeTime: fadeTime
                       ,isEvery: isEvery
@@ -4748,8 +4726,19 @@ Elm.Main.make = function (_elm) {
                       ,isShowClockTime: isShowClockTime
                       ,isAdvancePhotoTime: isAdvancePhotoTime
                       ,view: view
-                      ,updateRecords: updateRecords
+                      ,updateItems: updateItems
                       ,moveKey: moveKey
+                      ,updateDisplayClock: updateDisplayClock
+                      ,updateDebug: updateDebug
+                      ,updateConfig: updateConfig
+                      ,updateChannel: updateChannel
+                      ,updateRequestQueue: updateRequestQueue
+                      ,updateDate: updateDate
+                      ,updateGuide: updateGuide
+                      ,updatePhotos: updatePhotos
+                      ,updateLights: updateLights
+                      ,addRequest: addRequest
+                      ,log: log
                       ,update: update
                       ,quote: quote
                       ,encodeQuery: encodeQuery
