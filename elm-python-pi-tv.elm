@@ -130,11 +130,11 @@ view _ model (width, height) =
     in
       screen |> Graphics.Element.color Color.black |> Html.fromElement
 
-updateItems newItems keyedChannel =
+freshItems newItems keyedChannel =
   let newSelectedItemKey = case (keyedChannel.selectedItemKey, keyedChannel.items, newItems) of
     (Nothing, _, {key} :: _) -> Just key
     (oldSelectedItemKey, _, _) -> oldSelectedItemKey
-  in {keyedChannel | items <- newItems, selectedItemKey <- newSelectedItemKey}
+  in keyedChannel |> updateItems (always newItems) |> updateSelectedItemKey (always newSelectedItemKey)
 
 moveKey direction keyedChannel =
   let
@@ -152,14 +152,17 @@ moveKey direction keyedChannel =
         first :: _ -> Just first.key
         [] -> Nothing}
 
-updateDisplayClock f p = {p | displayClock <- f p.displayClock}
-updateConfig f m = {m | config <- f m.config}
-updateChannel f m = {m | channel <- f m.channel}
-updateRequestQueue f m = {m | requestQueue <- f m.requestQueue}
-updateDate f m = {m | date <- f m.date}
-updateGuide f m = {m | guide <- f m.guide}
-updatePhotos f m = {m | photos <- f m.photos}
-updateLights f m = {m | lights <- f m.lights}
+updateItems f r = {r | items <- f r.items}
+updateSelectedItemKey f r = {r | selectedItemKey <- f r.selectedItemKey}
+updateDisplayClock f r = {r | displayClock <- f r.displayClock}
+updateConfig f r = {r | config <- f r.config}
+updateChannel f r = {r | channel <- f r.channel}
+updateRequestQueue f r = {r | requestQueue <- f r.requestQueue}
+updateDate f r = {r | date <- f r.date}
+updateGuide f r = {r | guide <- f r.guide}
+updatePhotos f r = {r | photos <- f r.photos}
+updateLights f r = {r | lights <- f r.lights}
+
 addRequest request m = {m | requestQueue <- m.requestQueue ++ [request]}
 log = toString >> LogMessage >> addRequest
 update action rawModel =
@@ -169,8 +172,8 @@ update action rawModel =
       RequestDone -> identity
       Error error -> log error
       SetConfig config -> updateConfig (always config) >> log config
-      SetPhotoItems items -> updatePhotos (updateItems items)
-      SetLightItems items -> updateLights (updateItems items)
+      SetPhotoItems items -> updatePhotos (freshItems items)
+      SetLightItems items -> updateLights (freshItems items)
       Clock date ->
         updateDate (always date)
         >> ((if isAdvancePhotoTime date then Forward else Stay) |> moveKey |> updatePhotos)
@@ -261,7 +264,7 @@ port requestPort =
         modelSignal)
 
 emptyChannel = {selectedItemKey = Nothing, items = []}
-channel keys = emptyChannel |> (keys |> map (\k -> {key = k}) |> updateItems)
+channel keys = emptyChannel |> (keys |> map (\k -> {key = k}) |> freshItems)
 main = (view <| Signal.forwardTo viewMailbox.address Just)
    <~ modelSignal
     ~ Window.dimensions

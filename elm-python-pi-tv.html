@@ -3979,7 +3979,7 @@ Elm.Main.make = function (_elm) {
                       ,_0: _v0._0
                       ,_1: $Json$Encode.string(_v0._1)};}
             _U.badCase($moduleName,
-            "on line 204, column 58 to 71");
+            "on line 207, column 58 to 71");
          }();
       })($)));
    };
@@ -3997,52 +3997,64 @@ Elm.Main.make = function (_elm) {
       m);
    });
    var updateLights = F2(function (f,
-   m) {
+   r) {
       return _U.replace([["lights"
-                         ,f(m.lights)]],
-      m);
+                         ,f(r.lights)]],
+      r);
    });
    var updatePhotos = F2(function (f,
-   m) {
+   r) {
       return _U.replace([["photos"
-                         ,f(m.photos)]],
-      m);
+                         ,f(r.photos)]],
+      r);
    });
    var updateGuide = F2(function (f,
-   m) {
+   r) {
       return _U.replace([["guide"
-                         ,f(m.guide)]],
-      m);
+                         ,f(r.guide)]],
+      r);
    });
    var updateDate = F2(function (f,
-   m) {
+   r) {
       return _U.replace([["date"
-                         ,f(m.date)]],
-      m);
+                         ,f(r.date)]],
+      r);
    });
    var updateRequestQueue = F2(function (f,
-   m) {
+   r) {
       return _U.replace([["requestQueue"
-                         ,f(m.requestQueue)]],
-      m);
+                         ,f(r.requestQueue)]],
+      r);
    });
    var updateChannel = F2(function (f,
-   m) {
+   r) {
       return _U.replace([["channel"
-                         ,f(m.channel)]],
-      m);
+                         ,f(r.channel)]],
+      r);
    });
    var updateConfig = F2(function (f,
-   m) {
+   r) {
       return _U.replace([["config"
-                         ,f(m.config)]],
-      m);
+                         ,f(r.config)]],
+      r);
    });
    var updateDisplayClock = F2(function (f,
-   p) {
+   r) {
       return _U.replace([["displayClock"
-                         ,f(p.displayClock)]],
-      p);
+                         ,f(r.displayClock)]],
+      r);
+   });
+   var updateSelectedItemKey = F2(function (f,
+   r) {
+      return _U.replace([["selectedItemKey"
+                         ,f(r.selectedItemKey)]],
+      r);
+   });
+   var updateItems = F2(function (f,
+   r) {
+      return _U.replace([["items"
+                         ,f(r.items)]],
+      r);
    });
    var moveKey = F2(function (direction,
    keyedChannel) {
@@ -4109,7 +4121,7 @@ Elm.Main.make = function (_elm) {
          keyedChannel);
       }();
    });
-   var updateItems = F2(function (newItems,
+   var freshItems = F2(function (newItems,
    keyedChannel) {
       return function () {
          var newSelectedItemKey = function () {
@@ -4129,15 +4141,11 @@ Elm.Main.make = function (_elm) {
             _U.badCase($moduleName,
             "between lines 134 and 137");
          }();
-         return _U.replace([["items"
-                            ,newItems]
-                           ,["selectedItemKey"
-                            ,newSelectedItemKey]],
-         keyedChannel);
+         return updateSelectedItemKey($Basics.always(newSelectedItemKey))(updateItems($Basics.always(newItems))(keyedChannel));
       }();
    });
    var channel = function (keys) {
-      return updateItems($List.map(function (k) {
+      return freshItems($List.map(function (k) {
          return {_: {},key: k};
       })(keys))(emptyChannel);
    };
@@ -4446,7 +4454,7 @@ Elm.Main.make = function (_elm) {
                                return Stay;
                             }()));}
                        _U.badCase($moduleName,
-                       "between lines 182 and 201");
+                       "between lines 185 and 204");
                     }();
                  }();
                case "RequestDone":
@@ -4456,11 +4464,11 @@ Elm.Main.make = function (_elm) {
                     return log(action._0)(updateConfig($Basics.always(action._0))($));
                  };
                case "SetLightItems":
-               return updateLights(updateItems(action._0));
+               return updateLights(freshItems(action._0));
                case "SetPhotoItems":
-               return updatePhotos(updateItems(action._0));}
+               return updatePhotos(freshItems(action._0));}
             _U.badCase($moduleName,
-            "between lines 168 and 201");
+            "between lines 171 and 204");
          }()(model);
       }(updateRequestQueue(function ($) {
          return A2($Basics.flip,
@@ -4478,7 +4486,7 @@ Elm.Main.make = function (_elm) {
               _v52._0,
               model);}
          _U.badCase($moduleName,
-         "on line 271, column 30 to 49");
+         "on line 274, column 30 to 49");
       }();
    }),
    {_: {}
@@ -4605,7 +4613,7 @@ Elm.Main.make = function (_elm) {
                                _v65._0,
                                _v65._1);}
                           _U.badCase($moduleName,
-                          "on line 241, column 37 to 55");
+                          "on line 244, column 37 to 55");
                        }();
                     })($)));
                  },
@@ -4659,7 +4667,7 @@ Elm.Main.make = function (_elm) {
                  request._0,
                  requestDone);}
             _U.badCase($moduleName,
-            "between lines 225 and 255");
+            "between lines 228 and 258");
          }();
       },
       A3($Signal.filterMap,
@@ -4672,7 +4680,7 @@ Elm.Main.make = function (_elm) {
                case "[]":
                return $Maybe.Nothing;}
             _U.badCase($moduleName,
-            "between lines 257 and 259");
+            "between lines 260 and 262");
          }();
       },
       NoRequest,
@@ -4716,8 +4724,10 @@ Elm.Main.make = function (_elm) {
                       ,isShowClockTime: isShowClockTime
                       ,isAdvancePhotoTime: isAdvancePhotoTime
                       ,view: view
-                      ,updateItems: updateItems
+                      ,freshItems: freshItems
                       ,moveKey: moveKey
+                      ,updateItems: updateItems
+                      ,updateSelectedItemKey: updateSelectedItemKey
                       ,updateDisplayClock: updateDisplayClock
                       ,updateConfig: updateConfig
                       ,updateChannel: updateChannel
