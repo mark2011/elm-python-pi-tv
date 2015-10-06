@@ -1,0 +1,4 @@
+#!/bin/bash
+
+set -x
+elm-make elm-python-pi-tv.elm --output elm-python-pi-tv.html
