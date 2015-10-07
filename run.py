@@ -51,7 +51,7 @@ class LogMessageResource:
         print message
         standard_response (response)
 
-class SendKeyResource:
+class PressKeyResource:
     def on_get (self, request, response):
         key = get_json (request, "key")
         subprocess.call (["xdotool", "search", "--class", "chromium", "key", key])
@@ -67,6 +67,6 @@ api = falcon.API ()
 api.add_route (os.path.sep + "log-message", LogMessageResource ())
 api.add_route (os.path.sep + "get-configuration", GetConfigurationResource ())
 api.add_route (os.path.sep + "list-folder", ListFolderResource ())
-api.add_route (os.path.sep + "send-key", SendKeyResource ())
+api.add_route (os.path.sep + "press-key", PressKeyResource ())
 server = simple_server.make_server ("127.0.0.1", 3000, api)
 server.serve_forever ()

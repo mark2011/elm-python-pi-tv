@@ -232,7 +232,7 @@ port requestPort =
         simple "get-configuration" "none" "none"
           <| J.object1 ((\token -> {hueToken = token}) >> SetConfig) ("hueToken" := J.string)
       PressKeyboard press ->
-        simple "press-keyboard" "press" press requestDone
+        simple "press-key" "key" press requestDone
       GetPhotoItems ->
         simple "list-folder" "folder" "/home/pi/Pictures"
           <| J.object1 (List.sortBy .modTime >> SetPhotoItems) <| J.list <| J.tuple2 (\path modTime -> {key = path, modTime = modTime}) J.string J.float

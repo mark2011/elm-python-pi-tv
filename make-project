@@ -1,4 +1,4 @@
 #!/bin/bash
 
 set -x
-elm-make elm-python-pi-tv.elm --output elm-python-pi-tv.html
+elm-make elm-python-pi-tv.elm --output html/elm-python-pi-tv.html
