@@ -168,32 +168,37 @@ rmw = read.modify.write
 
 addRequest request = (\l -> l ++ [request]) |> rmw.requestQueue
 destroyOldestRequest = (\l -> List.tail l ? []) |> rmw.requestQueue
-log = toString >> LogMessage >> addRequest
-do list model = case list of
-  head :: tail -> do tail (head model)
-  [] -> model
+addLogMessage = toString >> LogMessage >> addRequest
+do functions data = case functions of
+  function :: moreFunctions -> do moreFunctions (function data)
+  [] -> data
+noChange = identity
+useBool f bool = if bool then f else noChange
+useString f string = if string /= "" then f string else noChange
+useMaybe f maybe = case maybe of
+  Just x -> f x
+  Nothing -> noChange
 update action rawModel =
   rawModel
   |> destroyOldestRequest
   |> (\model -> model |> (case action of
-      RequestDone -> identity
-      Error error -> log error
-      SetConfig config -> do [always config |> rmw.config, log config]
+      RequestDone -> noChange
+      Error error -> error |> addLogMessage
+      SetConfig config -> do [always config |> rmw.config, config |> addLogMessage]
       SetPhotoItems items -> freshItems items |> rmw.photos
       SetLightItems items -> freshItems items |> rmw.lights
       Clock date -> do
-        [always date |> rmw.date,
-         (if isAdvancePhotoTime date then Forward else Stay) |> moveKey |> rmw.photos,
-         always (isShowClockTime date) |> rmw.displayClock |> rmw.photos,
-         if isPollTime date then do
-           [addRequest GetPhotoItems,
-            addRequest (GetLightItems model.config.hueToken)]
-         else identity]
+        [date |> always |> rmw.date,
+         isAdvancePhotoTime date |> useBool (moveKey Forward |> rmw.photos),
+         isShowClockTime date |> always |> rmw.displayClock |> rmw.photos,
+         isPollTime date |> useBool (do
+           [GetPhotoItems |> addRequest,
+            model.config.hueToken |> useString (GetLightItems >> addRequest)])]
       KeyboardPressed press -> case press of
         'e' -> always Guide |> rmw.channel
         _ -> case model.channel of
           Guide -> case press of
-            'y' -> always (model.guide.selectedItemKey ? Guide) |> rmw.channel
+            'y' -> model.guide.selectedItemKey |> useMaybe (always >> rmw.channel)
             _ -> (case press of
               'j' -> Forward
               'k' -> Backward
@@ -205,7 +210,7 @@ update action rawModel =
             '0' -> Rewind
             _ -> Stay) |> moveKey |> rmw.photos
           Lights -> case press of
-            'y' -> model.lights.selectedItemKey ? "" |> BlinkLight model.config.hueToken |> addRequest
+            'y' -> model.lights.selectedItemKey |> useMaybe (BlinkLight model.config.hueToken >> addRequest)
             _ -> (case press of
               'j' -> Forward
               'k' -> Backward
@@ -246,25 +251,19 @@ port requestPort =
         simple "list-folder" "folder" "/home/pi/Pictures"
           <| J.object1 (List.sortBy .modTime >> SetPhotoItems) <| J.list <| J.tuple2 (\path modTime -> {key = path, modTime = modTime}) J.string J.float
       GetLightItems token ->
-        if token /= "" then
-          get
-            (hueUrl token)
-            <| J.object1
-              (map (\(id, light) -> {light | key = id}) >> List.sortBy (.name >> String.toUpper) >> SetLightItems)
-              (J.keyValuePairs <| J.object3 (\name on reachable -> {name = name, on = on, reachable = reachable})
-                ("name" := J.string)
-                (J.at ["state", "on"] J.bool)
-                (J.at ["state", "reachable"] J.bool))
-        else
-          sendResponse <| Error "no hue token"
+        get
+          (hueUrl token)
+          <| J.object1
+            (map (\(id, light) -> {light | key = id}) >> List.sortBy (.name >> String.toUpper) >> SetLightItems)
+            (J.keyValuePairs <| J.object3 (\name on reachable -> {name = name, on = on, reachable = reachable})
+              ("name" := J.string)
+              (J.at ["state", "on"] J.bool)
+              (J.at ["state", "reachable"] J.bool))
       BlinkLight token id -> 
-        if token /= "" then
-          put
-            (String.concat [hueUrl token, id, "/state"])
-            <| Http.string <| encodeQuery [("alert", "select")]
-        else
-          succeed ()
-      NoRequest -> succeed ())
+        put
+          (String.concat [hueUrl token, id, "/state"])
+          <| Http.string <| encodeQuery [("alert", "select")]
+      NoRequest -> sendResponse RequestDone)
       (Signal.filterMap
         (\model -> case model.requestQueue of
           head :: _ -> Just head
@@ -272,7 +271,7 @@ port requestPort =
         NoRequest
         modelSignal)
 
-keys = {browser = {fullScreen = "F11"}}
+keyboard = {browser = {fullScreen = "F11"}}
 emptyChannel = {selectedItemKey = Nothing, items = []}
 channel keys = emptyChannel |> (keys |> map (\k -> {key = k}) |> freshItems)
 main = (view <| Signal.forwardTo viewMailbox.address Just)
@@ -282,7 +281,7 @@ viewMailbox = Signal.mailbox Nothing
 modelSignal =
   Signal.foldp
     (\(Just action) model -> update action model)
-    {requestQueue = [GetConfig, PressKeyboard keys.browser.fullScreen, GetPhotoItems],
+    {requestQueue = [GetConfig, PressKeyboard keyboard.browser.fullScreen, GetPhotoItems],
      date = fromTime 0,
      config = {hueToken = ""},
      channel = Guide,
