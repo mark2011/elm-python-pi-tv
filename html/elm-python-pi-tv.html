@@ -3982,7 +3982,7 @@ Elm.Main.make = function (_elm) {
                       ,_0: _v0._0
                       ,_1: $Json$Encode.string(_v0._1)};}
             _U.badCase($moduleName,
-            "on line 211, column 58 to 71");
+            "on line 216, column 58 to 71");
          }();
       })($)));
    };
@@ -3991,6 +3991,18 @@ Elm.Main.make = function (_elm) {
       "\"",
       A2($Basics._op["++"],s,"\""));
    };
+   var $do = F2(function (list,
+   model) {
+      return function () {
+         switch (list.ctor)
+         {case "::": return A2($do,
+              list._1,
+              list._0(model));
+            case "[]": return model;}
+         _U.badCase($moduleName,
+         "between lines 172 and 174");
+      }();
+   });
    var read = {_: {}
               ,modify: {_: {}
                        ,write: {_: {}
@@ -4061,29 +4073,29 @@ Elm.Main.make = function (_elm) {
          var maybeNextKey = F2(function (channel,
          g) {
             return function () {
-               var _v4 = {ctor: "_Tuple2"
+               var _v7 = {ctor: "_Tuple2"
                          ,_0: channel.selectedItemKey
                          ,_1: $List.map(function (_) {
                             return _.key;
                          })(g(channel.items))};
-               switch (_v4.ctor)
+               switch (_v7.ctor)
                {case "_Tuple2":
-                  switch (_v4._1.ctor)
+                  switch (_v7._1.ctor)
                     {case "[]":
                        return $Maybe.Nothing;}
-                    switch (_v4._0.ctor)
+                    switch (_v7._0.ctor)
                     {case "Just":
-                       switch (_v4._1.ctor)
+                       switch (_v7._1.ctor)
                          {case "::":
                             return $Maybe.Just(A3($Module.nextEntry,
-                              _v4._1._0,
-                              _v4._1,
-                              _v4._0._0));}
+                              _v7._1._0,
+                              _v7._1,
+                              _v7._0._0));}
                          break;
                        case "Nothing":
-                       switch (_v4._1.ctor)
+                       switch (_v7._1.ctor)
                          {case "::":
-                            return $Maybe.Just(_v4._1._0);}
+                            return $Maybe.Just(_v7._1._0);}
                          break;}
                     break;}
                _U.badCase($moduleName,
@@ -4103,10 +4115,10 @@ Elm.Main.make = function (_elm) {
                                     $Basics.identity);
                                   case "Rewind":
                                   return function () {
-                                       var _v13 = keyedChannel.items;
-                                       switch (_v13.ctor)
+                                       var _v16 = keyedChannel.items;
+                                       switch (_v16.ctor)
                                        {case "::":
-                                          return $Maybe.Just(_v13._0.key);
+                                          return $Maybe.Just(_v16._0.key);
                                           case "[]":
                                           return $Maybe.Nothing;}
                                        _U.badCase($moduleName,
@@ -4124,19 +4136,19 @@ Elm.Main.make = function (_elm) {
    keyedChannel) {
       return function () {
          var newSelectedItemKey = function () {
-            var _v16 = {ctor: "_Tuple3"
+            var _v19 = {ctor: "_Tuple3"
                        ,_0: keyedChannel.selectedItemKey
                        ,_1: keyedChannel.items
                        ,_2: newItems};
-            switch (_v16.ctor)
+            switch (_v19.ctor)
             {case "_Tuple3":
-               switch (_v16._0.ctor)
+               switch (_v19._0.ctor)
                  {case "Nothing":
-                    switch (_v16._2.ctor)
+                    switch (_v19._2.ctor)
                       {case "::":
-                         return $Maybe.Just(_v16._2._0.key);}
+                         return $Maybe.Just(_v19._2._0.key);}
                       break;}
-                 return _v16._0;}
+                 return _v19._0;}
             _U.badCase($moduleName,
             "between lines 134 and 137");
          }();
@@ -4223,11 +4235,11 @@ Elm.Main.make = function (_elm) {
    var Lights = {ctor: "Lights"};
    var Photos = {ctor: "Photos"};
    var Guide = {ctor: "Guide"};
-   var view = F3(function (_v22,
+   var view = F3(function (_v25,
    model,
-   _v23) {
+   _v26) {
       return function () {
-         switch (_v23.ctor)
+         switch (_v26.ctor)
          {case "_Tuple2":
             return function () {
                  return function () {
@@ -4243,12 +4255,12 @@ Elm.Main.make = function (_elm) {
                        return $Basics.toFloat($Basics.floor(0.85 * $Basics.toFloat(x) / $Basics.toFloat(y)));
                     });
                     var fontSize1 = function (list) {
-                       return ratio(_v23._1)($List.length(list));
+                       return ratio(_v26._1)($List.length(list));
                     };
                     var fontSize2 = function (list) {
                        return F2(function (x,y) {
                           return x * y;
-                       })(1.85)(ratio(_v23._0)(A2($List.foldl,
+                       })(1.85)(ratio(_v26._0)(A2($List.foldl,
                        $Basics.max,
                        1)(A2($List.map,
                        $String.length,
@@ -4260,16 +4272,16 @@ Elm.Main.make = function (_elm) {
                        fontSize2(list));
                     };
                     var fullScreen = A2($Graphics$Element.container,
-                    _v23._0,
-                    _v23._1);
+                    _v26._0,
+                    _v26._1);
                     var drawLines2 = function (lines) {
                        return function () {
-                          var drawLine2 = function (_v28) {
+                          var drawLine2 = function (_v31) {
                              return function () {
-                                switch (_v28.ctor)
+                                switch (_v31.ctor)
                                 {case "_Tuple2":
-                                   return $Graphics$Element.leftAligned(_v28._1($Text.color($Color.white)($Text.height(fontSize($List.map($Basics.fst)(lines)))($Text.typeface(_L.fromArray(["monospace"]))($Text.fromString(_U.eq(_v28._0,
-                                     "") ? " " : _v28._0))))));}
+                                   return $Graphics$Element.leftAligned(_v31._1($Text.color($Color.white)($Text.height(fontSize($List.map($Basics.fst)(lines)))($Text.typeface(_L.fromArray(["monospace"]))($Text.fromString(_U.eq(_v31._0,
+                                     "") ? " " : _v31._0))))));}
                                 _U.badCase($moduleName,
                                 "between lines 69 and 75");
                              }();
@@ -4311,30 +4323,30 @@ Elm.Main.make = function (_elm) {
                                                              "                        ",
                                                              $Module.shortTime(model.date))]));
                     var screen = _U.eq(model.channel,
-                    Guide) ? drawLines($List.map(function (_v32) {
+                    Guide) ? drawLines($List.map(function (_v35) {
                        return function () {
                           return A2($Basics._op["++"],
                           A2(highlighter,
                           function (_) {
                              return _.guide;
                           },
-                          _v32.key),
-                          $Basics.toString(_v32.key));
+                          _v35.key),
+                          $Basics.toString(_v35.key));
                        }();
                     })(model.guide.items)) : _U.eq(model.channel,
                     Lights) ? !_U.eq(model.config.hueToken,
-                    "") ? drawLines2($List.map(function (_v34) {
+                    "") ? drawLines2($List.map(function (_v37) {
                        return function () {
                           return function () {
-                             var color = $Basics.not(_v34.reachable) ? $Color.red : $Basics.not(_v34.on) ? $Color.blue : $Color.white;
+                             var color = $Basics.not(_v37.reachable) ? $Color.red : $Basics.not(_v37.on) ? $Color.blue : $Color.white;
                              return {ctor: "_Tuple2"
                                     ,_0: A2($Basics._op["++"],
                                     A2(highlighter,
                                     function (_) {
                                        return _.lights;
                                     },
-                                    _v34.key),
-                                    _v34.name)
+                                    _v37.key),
+                                    _v37.name)
                                     ,_1: $Text.color(color)};
                           }();
                        }();
@@ -4345,13 +4357,13 @@ Elm.Main.make = function (_elm) {
                                                                      ,""
                                                                      ,""
                                                                      ,""])) : model.photos.displayClock ? clockText : function () {
-                       var _v36 = model.photos.selectedItemKey;
-                       switch (_v36.ctor)
+                       var _v39 = model.photos.selectedItemKey;
+                       switch (_v39.ctor)
                        {case "Just":
                           return $Graphics$Element.layers(_L.fromArray([fullScreen($Graphics$Element.middle)(A3($Graphics$Element.fittedImage,
-                                                                       _v23._0,
-                                                                       _v23._1,
-                                                                       _v36._0))
+                                                                       _v26._0,
+                                                                       _v26._1,
+                                                                       _v39._0))
                                                                        ,$Graphics$Element.opacity(overlayOpacity)(overlayText)]));
                           case "Nothing":
                           return drawLines(_L.fromArray([""
@@ -4404,11 +4416,11 @@ Elm.Main.make = function (_elm) {
          return function () {
             switch (action.ctor)
             {case "Clock":
-               return function ($) {
-                    return ($Basics.not(isPollTime(action._0)) ? $Basics.identity : function ($) {
-                       return addRequest(GetLightItems(model.config.hueToken))(addRequest(GetPhotoItems)($));
-                    })(rmw.photos(rmw.displayClock($Basics.always(isShowClockTime(action._0))))(rmw.photos(moveKey(isAdvancePhotoTime(action._0) ? Forward : Stay))(rmw.date($Basics.always(action._0))($))));
-                 };
+               return $do(_L.fromArray([rmw.date($Basics.always(action._0))
+                                       ,rmw.photos(moveKey(isAdvancePhotoTime(action._0) ? Forward : Stay))
+                                       ,rmw.photos(rmw.displayClock($Basics.always(isShowClockTime(action._0))))
+                                       ,isPollTime(action._0) ? $do(_L.fromArray([addRequest(GetPhotoItems)
+                                                                                 ,addRequest(GetLightItems(model.config.hueToken))])) : $Basics.identity]));
                case "Error":
                return log(action._0);
                case "KeyboardPressed":
@@ -4417,8 +4429,8 @@ Elm.Main.make = function (_elm) {
                     {case "e":
                        return rmw.channel($Basics.always(Guide));}
                     return function () {
-                       var _v46 = model.channel;
-                       switch (_v46.ctor)
+                       var _v49 = model.channel;
+                       switch (_v49.ctor)
                        {case "Guide":
                           return function () {
                                switch (action._0 + "")
@@ -4458,33 +4470,32 @@ Elm.Main.make = function (_elm) {
                                return Stay;
                             }()));}
                        _U.badCase($moduleName,
-                       "between lines 189 and 208");
+                       "between lines 194 and 213");
                     }();
                  }();
                case "RequestDone":
                return $Basics.identity;
                case "SetConfig":
-               return function ($) {
-                    return log(action._0)(rmw.config($Basics.always(action._0))($));
-                 };
+               return $do(_L.fromArray([rmw.config($Basics.always(action._0))
+                                       ,log(action._0)]));
                case "SetLightItems":
                return rmw.lights(freshItems(action._0));
                case "SetPhotoItems":
                return rmw.photos(freshItems(action._0));}
             _U.badCase($moduleName,
-            "between lines 175 and 208");
+            "between lines 178 and 213");
          }()(model);
       }(destroyOldestRequest(rawModel));
    });
    var modelSignal = A3($Signal.foldp,
-   F2(function (_v52,model) {
+   F2(function (_v55,model) {
       return function () {
-         switch (_v52.ctor)
+         switch (_v55.ctor)
          {case "Just": return A2(update,
-              _v52._0,
+              _v55._0,
               model);}
          _U.badCase($moduleName,
-         "on line 279, column 30 to 49");
+         "on line 284, column 30 to 49");
       }();
    }),
    {_: {}
@@ -4514,7 +4525,7 @@ Elm.Main.make = function (_elm) {
                                   $Keyboard.presses)])));
    var requestPort = Elm.Native.Task.make(_elm).performSignal("requestPort",
    function () {
-      var requestDone = $Json$Decode.object1(function (_v55) {
+      var requestDone = $Json$Decode.object1(function (_v58) {
          return function () {
             return RequestDone;
          }();
@@ -4545,7 +4556,7 @@ Elm.Main.make = function (_elm) {
          ,headers: _L.fromArray([])
          ,url: endPoint
          ,verb: "PUT"}),
-         function (_v57) {
+         function (_v60) {
             return function () {
                return sendResponse(RequestDone);
             }();
@@ -4603,15 +4614,15 @@ Elm.Main.make = function (_elm) {
                        return $String.toUpper(function (_) {
                           return _.name;
                        }($));
-                    })($List.map(function (_v65) {
+                    })($List.map(function (_v68) {
                        return function () {
-                          switch (_v65.ctor)
+                          switch (_v68.ctor)
                           {case "_Tuple2":
                              return _U.insert("key",
-                               _v65._0,
-                               _v65._1);}
+                               _v68._0,
+                               _v68._1);}
                           _U.badCase($moduleName,
-                          "on line 248, column 37 to 55");
+                          "on line 253, column 37 to 55");
                        }();
                     })($)));
                  },
@@ -4665,20 +4676,20 @@ Elm.Main.make = function (_elm) {
                  request._0,
                  requestDone);}
             _U.badCase($moduleName,
-            "between lines 232 and 262");
+            "between lines 237 and 267");
          }();
       },
       A3($Signal.filterMap,
       function (model) {
          return function () {
-            var _v69 = model.requestQueue;
-            switch (_v69.ctor)
+            var _v72 = model.requestQueue;
+            switch (_v72.ctor)
             {case "::":
-               return $Maybe.Just(_v69._0);
+               return $Maybe.Just(_v72._0);
                case "[]":
                return $Maybe.Nothing;}
             _U.badCase($moduleName,
-            "between lines 264 and 266");
+            "between lines 269 and 271");
          }();
       },
       NoRequest,
@@ -4729,6 +4740,7 @@ Elm.Main.make = function (_elm) {
                       ,addRequest: addRequest
                       ,destroyOldestRequest: destroyOldestRequest
                       ,log: log
+                      ,$do: $do
                       ,update: update
                       ,quote: quote
                       ,encodeQuery: encodeQuery

@@ -169,26 +169,31 @@ rmw = read.modify.write
 addRequest request = (\l -> l ++ [request]) |> rmw.requestQueue
 destroyOldestRequest = (\l -> List.tail l ? []) |> rmw.requestQueue
 log = toString >> LogMessage >> addRequest
+do list model = case list of
+  head :: tail -> do tail (head model)
+  [] -> model
 update action rawModel =
   rawModel
   |> destroyOldestRequest
   |> (\model -> model |> (case action of
       RequestDone -> identity
       Error error -> log error
-      SetConfig config -> (always config |> rmw.config) >> log config
+      SetConfig config -> do [always config |> rmw.config, log config]
       SetPhotoItems items -> freshItems items |> rmw.photos
       SetLightItems items -> freshItems items |> rmw.lights
-      Clock date ->
-        (always date |> rmw.date)
-        >> ((if isAdvancePhotoTime date then Forward else Stay) |> moveKey |> rmw.photos)
-        >> (isShowClockTime date |> always |> rmw.displayClock |> rmw.photos)
-        >> (if not (isPollTime date) then identity
-             else (addRequest GetPhotoItems >> addRequest (GetLightItems model.config.hueToken)))
+      Clock date -> do
+        [always date |> rmw.date,
+         (if isAdvancePhotoTime date then Forward else Stay) |> moveKey |> rmw.photos,
+         always (isShowClockTime date) |> rmw.displayClock |> rmw.photos,
+         if isPollTime date then do
+           [addRequest GetPhotoItems,
+            addRequest (GetLightItems model.config.hueToken)]
+         else identity]
       KeyboardPressed press -> case press of
         'e' -> always Guide |> rmw.channel
         _ -> case model.channel of
           Guide -> case press of
-            'y' -> model.guide.selectedItemKey ? Guide |> always |> rmw.channel
+            'y' -> always (model.guide.selectedItemKey ? Guide) |> rmw.channel
             _ -> (case press of
               'j' -> Forward
               'k' -> Backward
