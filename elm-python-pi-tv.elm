@@ -134,7 +134,7 @@ freshItems newItems keyedChannel =
   let newSelectedItemKey = case (keyedChannel.selectedItemKey, keyedChannel.items, newItems) of
     (Nothing, _, {key} :: _) -> Just key
     (oldSelectedItemKey, _, _) -> oldSelectedItemKey
-  in keyedChannel |> updateItems (always newItems) |> updateSelectedItemKey (always newSelectedItemKey)
+  in keyedChannel |> rmw.items (always newItems) |> rmw.selectedItemKey (always newSelectedItemKey)
 
 moveKey direction keyedChannel =
   let
@@ -152,56 +152,60 @@ moveKey direction keyedChannel =
         first :: _ -> Just first.key
         [] -> Nothing}
 
-updateItems f r = {r | items <- f r.items}
-updateSelectedItemKey f r = {r | selectedItemKey <- f r.selectedItemKey}
-updateDisplayClock f r = {r | displayClock <- f r.displayClock}
-updateConfig f r = {r | config <- f r.config}
-updateChannel f r = {r | channel <- f r.channel}
-updateRequestQueue f r = {r | requestQueue <- f r.requestQueue}
-updateDate f r = {r | date <- f r.date}
-updateGuide f r = {r | guide <- f r.guide}
-updatePhotos f r = {r | photos <- f r.photos}
-updateLights f r = {r | lights <- f r.lights}
+read = {modify = {write = {
+  config          = \f r -> {r | config          <- f r.config         },
+  channel         = \f r -> {r | channel         <- f r.channel        },
+  date            = \f r -> {r | date            <- f r.date           },
+  displayClock    = \f r -> {r | displayClock    <- f r.displayClock   },
+  guide           = \f r -> {r | guide           <- f r.guide          },
+  items           = \f r -> {r | items           <- f r.items          },
+  lights          = \f r -> {r | lights          <- f r.lights         },
+  photos          = \f r -> {r | photos          <- f r.photos         },
+  requestQueue    = \f r -> {r | requestQueue    <- f r.requestQueue   },
+  selectedItemKey = \f r -> {r | selectedItemKey <- f r.selectedItemKey}}}}
 
-addRequest request m = {m | requestQueue <- m.requestQueue ++ [request]}
+rmw = read.modify.write
+
+addRequest request = (\l -> l ++ [request]) |> rmw.requestQueue
+destroyOldestRequest = (\l -> List.tail l ? []) |> rmw.requestQueue
 log = toString >> LogMessage >> addRequest
 update action rawModel =
   rawModel
-  |> updateRequestQueue (List.tail >> flip (?) [])
+  |> destroyOldestRequest
   |> (\model -> model |> (case action of
       RequestDone -> identity
       Error error -> log error
-      SetConfig config -> updateConfig (always config) >> log config
-      SetPhotoItems items -> updatePhotos (freshItems items)
-      SetLightItems items -> updateLights (freshItems items)
+      SetConfig config -> (always config |> rmw.config) >> log config
+      SetPhotoItems items -> freshItems items |> rmw.photos
+      SetLightItems items -> freshItems items |> rmw.lights
       Clock date ->
-        updateDate (always date)
-        >> ((if isAdvancePhotoTime date then Forward else Stay) |> moveKey |> updatePhotos)
-        >> (isShowClockTime date |> always |> updateDisplayClock |> updatePhotos)
-        >> (if not (isPollTime date) then identity else
-             (addRequest GetPhotoItems >> addRequest (GetLightItems model.config.hueToken)))
+        (always date |> rmw.date)
+        >> ((if isAdvancePhotoTime date then Forward else Stay) |> moveKey |> rmw.photos)
+        >> (isShowClockTime date |> always |> rmw.displayClock |> rmw.photos)
+        >> (if not (isPollTime date) then identity
+             else (addRequest GetPhotoItems >> addRequest (GetLightItems model.config.hueToken)))
       KeyboardPressed press -> case press of
-        'e' -> always Guide |> updateChannel
+        'e' -> always Guide |> rmw.channel
         _ -> case model.channel of
           Guide -> case press of
-            'y' -> model.guide.selectedItemKey ? Guide |> always |> updateChannel
+            'y' -> model.guide.selectedItemKey ? Guide |> always |> rmw.channel
             _ -> (case press of
               'j' -> Forward
               'k' -> Backward
               '0' -> Rewind
-              _ -> Stay) |> moveKey |> updateGuide
+              _ -> Stay) |> moveKey |> rmw.guide
           Photos -> (case press of
             'l' -> Forward
             'h' -> Backward
             '0' -> Rewind
-            _ -> Stay) |> moveKey |> updatePhotos
+            _ -> Stay) |> moveKey |> rmw.photos
           Lights -> case press of
             'y' -> model.lights.selectedItemKey ? "" |> BlinkLight model.config.hueToken |> addRequest
             _ -> (case press of
               'j' -> Forward
               'k' -> Backward
               '0' -> Rewind
-              _ -> Stay) |> moveKey |> updateLights))
+              _ -> Stay) |> moveKey |> rmw.lights))
 
 quote s = "\"" ++ s ++ "\""
 encodeQuery = K.encode 0 << K.object << map (\(k, v) -> (k, K.string v))
@@ -263,6 +267,7 @@ port requestPort =
         NoRequest
         modelSignal)
 
+keys = {browser = {fullScreen = "F11"}}
 emptyChannel = {selectedItemKey = Nothing, items = []}
 channel keys = emptyChannel |> (keys |> map (\k -> {key = k}) |> freshItems)
 main = (view <| Signal.forwardTo viewMailbox.address Just)
@@ -272,7 +277,7 @@ viewMailbox = Signal.mailbox Nothing
 modelSignal =
   Signal.foldp
     (\(Just action) model -> update action model)
-    {requestQueue = [GetConfig, PressKeyboard "F11", GetPhotoItems],
+    {requestQueue = [GetConfig, PressKeyboard keys.browser.fullScreen, GetPhotoItems],
      date = fromTime 0,
      config = {hueToken = ""},
      channel = Guide,

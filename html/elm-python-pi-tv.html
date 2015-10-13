@@ -3969,6 +3969,9 @@ Elm.Main.make = function (_elm) {
    var emptyChannel = {_: {}
                       ,items: _L.fromArray([])
                       ,selectedItemKey: $Maybe.Nothing};
+   var keys = {_: {}
+              ,browser: {_: {}
+                        ,fullScreen: "F11"}};
    var responseMailbox = $Signal.mailbox($Maybe.Nothing);
    var encodeQuery = function ($) {
       return $Json$Encode.encode(0)($Json$Encode.object($List.map(function (_v0) {
@@ -3979,7 +3982,7 @@ Elm.Main.make = function (_elm) {
                       ,_0: _v0._0
                       ,_1: $Json$Encode.string(_v0._1)};}
             _U.badCase($moduleName,
-            "on line 207, column 58 to 71");
+            "on line 211, column 58 to 71");
          }();
       })($)));
    };
@@ -3988,74 +3991,70 @@ Elm.Main.make = function (_elm) {
       "\"",
       A2($Basics._op["++"],s,"\""));
    };
-   var addRequest = F2(function (request,
-   m) {
-      return _U.replace([["requestQueue"
-                         ,A2($Basics._op["++"],
-                         m.requestQueue,
-                         _L.fromArray([request]))]],
-      m);
-   });
-   var updateLights = F2(function (f,
-   r) {
-      return _U.replace([["lights"
-                         ,f(r.lights)]],
-      r);
-   });
-   var updatePhotos = F2(function (f,
-   r) {
-      return _U.replace([["photos"
-                         ,f(r.photos)]],
-      r);
-   });
-   var updateGuide = F2(function (f,
-   r) {
-      return _U.replace([["guide"
-                         ,f(r.guide)]],
-      r);
-   });
-   var updateDate = F2(function (f,
-   r) {
-      return _U.replace([["date"
-                         ,f(r.date)]],
-      r);
-   });
-   var updateRequestQueue = F2(function (f,
-   r) {
-      return _U.replace([["requestQueue"
-                         ,f(r.requestQueue)]],
-      r);
-   });
-   var updateChannel = F2(function (f,
-   r) {
-      return _U.replace([["channel"
-                         ,f(r.channel)]],
-      r);
-   });
-   var updateConfig = F2(function (f,
-   r) {
-      return _U.replace([["config"
-                         ,f(r.config)]],
-      r);
-   });
-   var updateDisplayClock = F2(function (f,
-   r) {
-      return _U.replace([["displayClock"
-                         ,f(r.displayClock)]],
-      r);
-   });
-   var updateSelectedItemKey = F2(function (f,
-   r) {
-      return _U.replace([["selectedItemKey"
-                         ,f(r.selectedItemKey)]],
-      r);
-   });
-   var updateItems = F2(function (f,
-   r) {
-      return _U.replace([["items"
-                         ,f(r.items)]],
-      r);
-   });
+   var read = {_: {}
+              ,modify: {_: {}
+                       ,write: {_: {}
+                               ,channel: F2(function (f,r) {
+                                  return _U.replace([["channel"
+                                                     ,f(r.channel)]],
+                                  r);
+                               })
+                               ,config: F2(function (f,r) {
+                                  return _U.replace([["config"
+                                                     ,f(r.config)]],
+                                  r);
+                               })
+                               ,date: F2(function (f,r) {
+                                  return _U.replace([["date"
+                                                     ,f(r.date)]],
+                                  r);
+                               })
+                               ,displayClock: F2(function (f,
+                               r) {
+                                  return _U.replace([["displayClock"
+                                                     ,f(r.displayClock)]],
+                                  r);
+                               })
+                               ,guide: F2(function (f,r) {
+                                  return _U.replace([["guide"
+                                                     ,f(r.guide)]],
+                                  r);
+                               })
+                               ,items: F2(function (f,r) {
+                                  return _U.replace([["items"
+                                                     ,f(r.items)]],
+                                  r);
+                               })
+                               ,lights: F2(function (f,r) {
+                                  return _U.replace([["lights"
+                                                     ,f(r.lights)]],
+                                  r);
+                               })
+                               ,photos: F2(function (f,r) {
+                                  return _U.replace([["photos"
+                                                     ,f(r.photos)]],
+                                  r);
+                               })
+                               ,requestQueue: F2(function (f,
+                               r) {
+                                  return _U.replace([["requestQueue"
+                                                     ,f(r.requestQueue)]],
+                                  r);
+                               })
+                               ,selectedItemKey: F2(function (f,
+                               r) {
+                                  return _U.replace([["selectedItemKey"
+                                                     ,f(r.selectedItemKey)]],
+                                  r);
+                               })}}};
+   var rmw = read.modify.write;
+   var addRequest = function (request) {
+      return rmw.requestQueue(function (l) {
+         return A2($Basics._op["++"],
+         l,
+         _L.fromArray([request]));
+      });
+   };
    var moveKey = F2(function (direction,
    keyedChannel) {
       return function () {
@@ -4141,7 +4140,7 @@ Elm.Main.make = function (_elm) {
             _U.badCase($moduleName,
             "between lines 134 and 137");
          }();
-         return updateSelectedItemKey($Basics.always(newSelectedItemKey))(updateItems($Basics.always(newItems))(keyedChannel));
+         return rmw.selectedItemKey($Basics.always(newSelectedItemKey))(rmw.items($Basics.always(newItems))(keyedChannel));
       }();
    });
    var channel = function (keys) {
@@ -4394,6 +4393,11 @@ Elm.Main.make = function (_elm) {
       $default,
       maybe);
    });
+   var destroyOldestRequest = rmw.requestQueue(function (l) {
+      return A2(_op["?"],
+      $List.tail(l),
+      _L.fromArray([]));
+   });
    var update = F2(function (action,
    rawModel) {
       return function (model) {
@@ -4403,7 +4407,7 @@ Elm.Main.make = function (_elm) {
                return function ($) {
                     return ($Basics.not(isPollTime(action._0)) ? $Basics.identity : function ($) {
                        return addRequest(GetLightItems(model.config.hueToken))(addRequest(GetPhotoItems)($));
-                    })(updatePhotos(updateDisplayClock($Basics.always(isShowClockTime(action._0))))(updatePhotos(moveKey(isAdvancePhotoTime(action._0) ? Forward : Stay))(updateDate($Basics.always(action._0))($))));
+                    })(rmw.photos(rmw.displayClock($Basics.always(isShowClockTime(action._0))))(rmw.photos(moveKey(isAdvancePhotoTime(action._0) ? Forward : Stay))(rmw.date($Basics.always(action._0))($))));
                  };
                case "Error":
                return log(action._0);
@@ -4411,7 +4415,7 @@ Elm.Main.make = function (_elm) {
                return function () {
                     switch (action._0 + "")
                     {case "e":
-                       return updateChannel($Basics.always(Guide));}
+                       return rmw.channel($Basics.always(Guide));}
                     return function () {
                        var _v46 = model.channel;
                        switch (_v46.ctor)
@@ -4419,10 +4423,10 @@ Elm.Main.make = function (_elm) {
                           return function () {
                                switch (action._0 + "")
                                {case "y":
-                                  return updateChannel($Basics.always(A2(_op["?"],
+                                  return rmw.channel($Basics.always(A2(_op["?"],
                                     model.guide.selectedItemKey,
                                     Guide)));}
-                               return updateGuide(moveKey(function () {
+                               return rmw.guide(moveKey(function () {
                                   switch (action._0 + "")
                                   {case "0": return Rewind;
                                      case "j": return Forward;
@@ -4437,7 +4441,7 @@ Elm.Main.make = function (_elm) {
                                   return addRequest(BlinkLight(model.config.hueToken)(A2(_op["?"],
                                     model.lights.selectedItemKey,
                                     "")));}
-                               return updateLights(moveKey(function () {
+                               return rmw.lights(moveKey(function () {
                                   switch (action._0 + "")
                                   {case "0": return Rewind;
                                      case "j": return Forward;
@@ -4446,7 +4450,7 @@ Elm.Main.make = function (_elm) {
                                }()));
                             }();
                           case "Photos":
-                          return updatePhotos(moveKey(function () {
+                          return rmw.photos(moveKey(function () {
                                switch (action._0 + "")
                                {case "0": return Rewind;
                                   case "h": return Backward;
@@ -4454,29 +4458,23 @@ Elm.Main.make = function (_elm) {
                                return Stay;
                             }()));}
                        _U.badCase($moduleName,
-                       "between lines 185 and 204");
+                       "between lines 189 and 208");
                     }();
                  }();
                case "RequestDone":
                return $Basics.identity;
                case "SetConfig":
                return function ($) {
-                    return log(action._0)(updateConfig($Basics.always(action._0))($));
+                    return log(action._0)(rmw.config($Basics.always(action._0))($));
                  };
                case "SetLightItems":
-               return updateLights(freshItems(action._0));
+               return rmw.lights(freshItems(action._0));
                case "SetPhotoItems":
-               return updatePhotos(freshItems(action._0));}
+               return rmw.photos(freshItems(action._0));}
             _U.badCase($moduleName,
-            "between lines 171 and 204");
+            "between lines 175 and 208");
          }()(model);
-      }(updateRequestQueue(function ($) {
-         return A2($Basics.flip,
-         F2(function (x,y) {
-            return A2(_op["?"],x,y);
-         }),
-         _L.fromArray([]))($List.tail($));
-      })(rawModel));
+      }(destroyOldestRequest(rawModel));
    });
    var modelSignal = A3($Signal.foldp,
    F2(function (_v52,model) {
@@ -4486,7 +4484,7 @@ Elm.Main.make = function (_elm) {
               _v52._0,
               model);}
          _U.badCase($moduleName,
-         "on line 274, column 30 to 49");
+         "on line 279, column 30 to 49");
       }();
    }),
    {_: {}
@@ -4500,7 +4498,7 @@ Elm.Main.make = function (_elm) {
    false,
    emptyChannel)
    ,requestQueue: _L.fromArray([GetConfig
-                               ,PressKeyboard("F11")
+                               ,PressKeyboard(keys.browser.fullScreen)
                                ,GetPhotoItems])},
    $Signal.mergeMany(_L.fromArray([viewMailbox.signal
                                   ,responseMailbox.signal
@@ -4613,7 +4611,7 @@ Elm.Main.make = function (_elm) {
                                _v65._0,
                                _v65._1);}
                           _U.badCase($moduleName,
-                          "on line 244, column 37 to 55");
+                          "on line 248, column 37 to 55");
                        }();
                     })($)));
                  },
@@ -4667,7 +4665,7 @@ Elm.Main.make = function (_elm) {
                  request._0,
                  requestDone);}
             _U.badCase($moduleName,
-            "between lines 228 and 258");
+            "between lines 232 and 262");
          }();
       },
       A3($Signal.filterMap,
@@ -4680,7 +4678,7 @@ Elm.Main.make = function (_elm) {
                case "[]":
                return $Maybe.Nothing;}
             _U.badCase($moduleName,
-            "between lines 260 and 262");
+            "between lines 264 and 266");
          }();
       },
       NoRequest,
@@ -4726,22 +4724,16 @@ Elm.Main.make = function (_elm) {
                       ,view: view
                       ,freshItems: freshItems
                       ,moveKey: moveKey
-                      ,updateItems: updateItems
-                      ,updateSelectedItemKey: updateSelectedItemKey
-                      ,updateDisplayClock: updateDisplayClock
-                      ,updateConfig: updateConfig
-                      ,updateChannel: updateChannel
-                      ,updateRequestQueue: updateRequestQueue
-                      ,updateDate: updateDate
-                      ,updateGuide: updateGuide
-                      ,updatePhotos: updatePhotos
-                      ,updateLights: updateLights
+                      ,read: read
+                      ,rmw: rmw
                       ,addRequest: addRequest
+                      ,destroyOldestRequest: destroyOldestRequest
                       ,log: log
                       ,update: update
                       ,quote: quote
                       ,encodeQuery: encodeQuery
                       ,responseMailbox: responseMailbox
+                      ,keys: keys
                       ,emptyChannel: emptyChannel
                       ,channel: channel
                       ,main: main
